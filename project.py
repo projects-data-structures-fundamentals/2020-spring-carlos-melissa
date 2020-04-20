@@ -21,8 +21,8 @@ class DeveloperStats():
         Returns: dictionary
             keys: categories from CSV file (strings)
             values: dictionary
-                keys: answers from respondant (strings)
-                value: count of occurrance of answers (integers)
+                keys: answers from respondents (strings)
+                value: count of occurrence of answers (integers)
         """
         # Do not forget to parse the LanguageWorkedWith category
 
@@ -38,17 +38,31 @@ class DeveloperStats():
             values: dictionary
                 keys: categories from CSV file (strings)
                 values: dictionary
-                    keys: answers from respondant (strings)
-                    values: count of occurrance of answers (integers)
+                    keys: answers from respondents (strings)
+                    values: count of occurrence of answers (integers)
         """
 
     @classmethod
-    def plot_data(cls, category_dict):
+    def top_five(cls, category_dict):
         """
-        This method uses the data from category_dict and plots the occurrance
-        of answers for each category
-        category_dict: the dictionary returned from category_dict()
-        Returns: ?
+        This method sorts through the dictionary returned from
+        categorize_data() and determines the top five results for each salary
+        category
+        category_dict: the dictionary returned from categorize_data()
+        Returns: dictionary
+            keys: salary category (strings)
+            values: dictionary
+                keys: top answers (strings)
+                values: count of occurrence of answers (integers)
+        """
+
+    @classmethod
+    def plot_data(cls, top_five_dict):
+        """
+        This method sorts through the dictionary returned from top_five() and
+        plots the occurrance of answers for each salary category
+        top_five_dict: the dictionary returned from top_five()
+        Returns: three plots that display the results of top_five_dict
         """
 
 

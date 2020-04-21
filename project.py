@@ -4,7 +4,7 @@ Final project for COMP 525
 Carlos Sandoval & Melissa Mullen
 Updated April 21, 2020
 """
-# import plotting library
+# import plotly
 
 
 class DeveloperStats():
@@ -29,7 +29,7 @@ class DeveloperStats():
     @classmethod
     def categorize_data(cls, count_dict):
         """
-        This method sorts through the CSV file provided from count_dict and
+        This method sorts through the dictionary returned from read_csv() and
         categorizes the data into three categories: low_salary, medium_salary,
         and high_salary
         count_dict: the dictionary returned from read_csv()
@@ -52,13 +52,16 @@ class DeveloperStats():
         Returns: dictionary
             keys: salary category (strings)
             values: dictionary
-                keys: top answers (strings)
-                values: count of occurrence of answers (integers)
+                keys: categories from CSV file (strings)
+                values: dictionary
+                    keys: top answers (strings)
+                    values: count of occurrence of answers (integers)
         """
 
     @classmethod
     def plot_data(cls, top_five_dict):
         """
+        This method requires the plotly library
         This method sorts through the dictionary returned from top_five() and
         plots the occurrance of answers for each salary category
         top_five_dict: the dictionary returned from top_five()

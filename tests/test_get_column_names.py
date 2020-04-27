@@ -21,7 +21,7 @@ class TestGetColumnNames(unittest.TestCase):
 
     def test_for_empty_header(self):
         """
-        Test case for testing empty csv file header
+        Test case for testing empty csv file header or empty csv file
         """
         input = 'getColumnNames1.csv'
 

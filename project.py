@@ -57,6 +57,8 @@ class DeveloperStats():
                 del row[0] # respondant id
                 del row[3] # salary
                 del row[4] # gender
+                del row[4] # race
+                del row[6] # age
                 if field_salary <= 50000:
                     low_salary_list.append(row) # appends this response to low_salary_list
                     frequency_data['low_salary']['count'] += 1 # count increases

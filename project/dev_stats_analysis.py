@@ -49,19 +49,21 @@ class DeveloperStats():
             'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
             'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
         }
-        with open('stats.csv', 'r') as file_ref:
+        with open(filename, 'r') as file_ref:
             temp_frequency_holder_dic = {}
             for line in file_ref.readlines()[1:]:
                 row = line.strip().split('|')
                 field_salary = float(row[target_column_index])
-                del row[0] # respondant id
-                del row[3] # salary
-                del row[4] # gender
-                del row[4] # race
-                del row[6] # age
+                del row[0]  # respondant id
+                del row[3]  # salary
+                del row[4]  # gender
+                del row[4]  # race
+                del row[6]  # age
                 if field_salary <= 50000:
-                    low_salary_list.append(row) # appends this response to low_salary_list
-                    frequency_data['low_salary']['count'] += 1 # count increases
+                    # appends this response to low_salary_list
+                    low_salary_list.append(row)
+                    # count increases
+                    frequency_data['low_salary']['count'] += 1
                 elif field_salary <= 80000:
                     medium_salary_list.append(row)
                     frequency_data['medium_salary']['count'] += 1
@@ -100,22 +102,30 @@ class DeveloperStats():
             'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
         }
         for salary_category in category_dict:
-            frequency_data[salary_category]['count'] = category_dict[salary_category]['count'] # makes the count values the same as the previous method
+            # makes the count values the same as the previous method
+            frequency_data[salary_category]['count'] = category_dict[salary_category]['count']
             temp_frequency_holder_dic = {}
-            for responses in category_dict[salary_category]['data']: # for responses in each salary category
-                languages = responses[-1] # picks out the LanguageWorkedWith column
-                list_of_languages = languages.split(';') # parses it
+            # for responses in each salary category
+            for responses in category_dict[salary_category]['data']:
+                # picks out the LanguageWorkedWith column
+                languages = responses[-1]
+                list_of_languages = languages.split(';')  # parses it
                 for language in list_of_languages:
-                    if(language not in temp_frequency_holder_dic): # if it's not a key already...
-                        temp_frequency_holder_dic[language] = 0 # make it a key value pair
-                    temp_frequency_holder_dic[language] += 1 # increment by one with each occurrance
-                for item in responses[:-1]: # for all other features except languages
+                    # if it's not a key already...
+                    if(language not in temp_frequency_holder_dic):
+                        # make it a key value pair
+                        temp_frequency_holder_dic[language] = 0
+                    # increment by one with each occurrance
+                    temp_frequency_holder_dic[language] += 1
+                # for all other features except languages
+                for item in responses[:-1]:
                     if(item not in temp_frequency_holder_dic):
                         temp_frequency_holder_dic[item] = 0
                     temp_frequency_holder_dic[item] += 1
             frequency_data[salary_category]['data'] = temp_frequency_holder_dic
 
         return frequency_data
+
     @classmethod
     def top_five(cls, category_dict):
         """
@@ -135,15 +145,19 @@ class DeveloperStats():
         for key in category_dict.keys():
             top_five_dict[key] = {}
             temp_count = {'one': 0, 'two': 0, 'three': 0, 'four': 0, 'five': 0}
-            for category in category_dict[key]['data']: # for responses in each salary category
-                item_count = (category_dict[key]['data'][category]) # count of feature
-                if item_count > temp_count['one']: # if count is greater than largest feature
+            # for responses in each salary category
+            for category in category_dict[key]['data']:
+                # count of feature
+                item_count = (category_dict[key]['data'][category])
+                # if count is greater than largest feature
+                if item_count > temp_count['one']:
                     # move all the other features down a notch
                     temp_count['five'] = temp_count['four']
                     temp_count['four'] = temp_count['three']
                     temp_count['three'] = temp_count['two']
                     temp_count['two'] = temp_count['one']
-                    temp_count['one'] = item_count # make this feature the largest feature
+                    # make this feature the largest feature
+                    temp_count['one'] = item_count
 
                 elif item_count > temp_count['two']:
                     temp_count['five'] = temp_count['four']
@@ -163,10 +177,13 @@ class DeveloperStats():
                 elif item_count > temp_count['five']:
                     temp_count['five'] = item_count
 
-            keys = list(category_dict[key]['data'].keys()) # a list of the keys
-            values = list(category_dict[key]['data'].values()) # a list of the values
+            # a list of the keys
+            keys = list(category_dict[key]['data'].keys())
+            # a list of the values
+            values = list(category_dict[key]['data'].values())
 
-            one = keys[values.index(temp_count['one'])] # finding the key associated with the value pair
+            # finding the key associated with the value pair
+            one = keys[values.index(temp_count['one'])]
             two = keys[values.index(temp_count['two'])]
             three = keys[values.index(temp_count['three'])]
             four = keys[values.index(temp_count['four'])]

@@ -134,6 +134,43 @@ class DeveloperStats():
                     keys: top answers (strings)
                     values: count of occurrence of answers (integers)
         """
+        top_five_dict = {}
+        for key in category_dict.keys():
+            top_five_dict[key] = {}
+            temp_count = {'one': 0, 'two': 0, 'three': 0, 'four': 0, 'five': 0}
+
+            for category in category_dict[key]['data']:
+                for item in category_dict[key]['data'][category]:
+                    item_count = (category_dict[key]['data'][category][item])
+                    if item_count > temp_count['one']:
+                        temp_count['five'] = temp_count['four']
+                        temp_count['four'] = temp_count['three']
+                        temp_count['three'] = temp_count['two']
+                        temp_count['two'] = temp_count['one']
+                        temp_count['one'] = item_count
+                    elif item_count > temp_count['two']:
+                        temp_count['five'] = temp_count['four']
+                        temp_count['four'] = temp_count['three']
+                        temp_count['three'] = temp_count['two']
+                        temp_count['two'] = item_count
+                    elif item_count > temp_count['three']:
+                        temp_count['five'] = temp_count['four']
+                        temp_count['four'] = temp_count['three']
+                        temp_count['three'] = item_count
+                    elif item_count > temp_count['four']:
+                        temp_count['five'] = temp_count['four']
+                        temp_count['four'] = item_count
+                    elif item_count > temp_count['five']:
+                        temp_count['five'] = item_count
+            top_five_dict[key] = temp_count
+            # for category in category_dict[key]['data']:
+            #     if category not in top_five_dict[key]:
+            #         top_five_dict[key][category] = {}
+            #     for items in category_dict[key]['data'][category]:
+            #         top_five_dict[key][category][items] = category_dict[key]['data'][category][items]
+                    # print(category_dict[key]['data'][category][items])
+
+        return top_five_dict
 
     @classmethod
     def plot_data(cls, top_five_dict):
@@ -152,16 +189,17 @@ def main():
     """
     develop = DeveloperStats()
     filename = 'stats.csv'
-    # result = develop.get_column_names(filename)
+    result = develop.get_column_names(filename)
     # print(f' column names in {filename} are: {result}')
     # print("\n")
     #
-    result = develop.categorize_data(filename)
-    print(f' example {filename} are: {result}')
+    category_dict = develop.categorize_data(filename)
+    print(f' example {filename} are: {category_dict}')
     print("\n")
 
-    # result = develop.parse_programming_languages(filename)
-    # print(f' example {filename} are: {result}')
+    top_five_dict = develop.top_five(category_dict)
+    print(f' {top_five_dict}')
+
 
 if __name__ == '__main__':
     main()

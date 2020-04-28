@@ -1,10 +1,12 @@
+
+import plotly.graph_objects as go
+
 """
 project.py
 Final project for COMP 525
 Carlos Sandoval & Melissa Mullen
 Updated April 26, 2020
 """
-import plotly.graph_objects as go
 
 
 class DeveloperStats():
@@ -49,7 +51,7 @@ class DeveloperStats():
             'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
             'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
         }
-        with open(filename, 'r') as file_ref:
+        with open('stats.csv', 'r') as file_ref:
             temp_frequency_holder_dic = {}
             for line in file_ref.readlines()[1:]:
                 row = line.strip().split('|')
@@ -144,23 +146,12 @@ class DeveloperStats():
         for key in count_dict.keys():
             top_five_dict[key] = {}
             temp_count = {'one': 0, 'two': 0, 'three': 0, 'four': 0, 'five': 0}
-
-
-<< << << < HEAD: project/dev_stats_analysis.py
-            # for responses in each salary category
-            for category in category_dict[key]['data']:
-                # count of feature
-                item_count = (category_dict[key]['data'][category])
-                # if count is greater than largest feature
-                if item_count > temp_count['one']:
-== == == =
             # for responses in each salary category
             for category in count_dict[key]['data']:
                 item_count = (count_dict[key]['data']
                               [category])  # count of feature
                 # if count is greater than largest feature
                 if item_count > temp_count['one']:
->>>>>> > origin/master: project.py
                     # move all the other features down a notch
                     temp_count['five'] = temp_count['four']
                     temp_count['four'] = temp_count['three']
@@ -187,10 +178,9 @@ class DeveloperStats():
                 elif item_count > temp_count['five']:
                     temp_count['five'] = item_count
 
-            # a list of the keys
-            keys = list(category_dict[key]['data'].keys())
+            keys = list(count_dict[key]['data'].keys())  # a list of the keys
             # a list of the values
-            values = list(category_dict[key]['data'].values())
+            values = list(count_dict[key]['data'].values())
 
             # finding the key associated with the value pair
             one = keys[values.index(temp_count['one'])]
@@ -252,6 +242,7 @@ def main():
 
     plot = develop.plot_data(top_five_dict)
     print(f' the top five occurring features are {plot}')
+
 
 if __name__ == '__main__':
     main()

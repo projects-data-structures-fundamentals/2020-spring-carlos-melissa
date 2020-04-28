@@ -77,7 +77,7 @@ class DeveloperStats():
         return frequency_data
 
     @classmethod
-    def count_data(cls, filename):
+    def count_data(cls, category_dict):
         """
         This method sorts through the CSV file provided from filename and
         counts the occurrance of respondant's answers in each salary category
@@ -95,7 +95,6 @@ class DeveloperStats():
                         keys: answers from respondents (strings)
                         values: count of occurrence of answers (integers)
         """
-        category_dict = DeveloperStats.categorize_data(filename)
         frequency_data = {
             'low_salary': {'count': 0, 'min': 0, 'max': 50000, 'data': {}},
             'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
@@ -127,7 +126,7 @@ class DeveloperStats():
         return frequency_data
 
     @classmethod
-    def top_five(cls, category_dict):
+    def top_five(cls, count_dict):
         """
         This method sorts through the dictionary returned from
         count_data() and determines the top five results for each salary
@@ -142,15 +141,26 @@ class DeveloperStats():
                     values: count of occurrence of feature (integer)
         """
         top_five_dict = {}
-        for key in category_dict.keys():
+        for key in count_dict.keys():
             top_five_dict[key] = {}
             temp_count = {'one': 0, 'two': 0, 'three': 0, 'four': 0, 'five': 0}
+
+
+<< << << < HEAD: project/dev_stats_analysis.py
             # for responses in each salary category
             for category in category_dict[key]['data']:
                 # count of feature
                 item_count = (category_dict[key]['data'][category])
                 # if count is greater than largest feature
                 if item_count > temp_count['one']:
+== == == =
+            # for responses in each salary category
+            for category in count_dict[key]['data']:
+                item_count = (count_dict[key]['data']
+                              [category])  # count of feature
+                # if count is greater than largest feature
+                if item_count > temp_count['one']:
+>>>>>> > origin/master: project.py
                     # move all the other features down a notch
                     temp_count['five'] = temp_count['four']
                     temp_count['four'] = temp_count['three']
@@ -208,6 +218,15 @@ class DeveloperStats():
         Returns: three plots that display the results of top_five_dict
         """
 
+        # for salary in top_five_dict:
+        #     for rankings in top_five_dict[salary]:
+        #         for data in top_five_dict[salary][rankings]:
+        #             print(data)
+        # animals=['giraffes', 'orangutans', 'monkeys']
+        #
+        # fig = go.Figure([go.Bar(x=animals, y=[20, 14, 23])])
+        # fig.show()
+
 
 def main():
     """
@@ -219,17 +238,20 @@ def main():
     print(f' column names in {filename} are: {result}')
     print("\n")
 
-    result = develop.categorize_data(filename)
+    category_dict = develop.categorize_data(filename)
     print(f' categorized data in {filename} is: {result}')
     print("\n")
 
-    category_dict = develop.count_data(filename)
+    count_dict = develop.count_data(category_dict)
     print(f' counted categories in {filename} are: {category_dict}')
     print("\n")
 
-    top_five_dict = develop.top_five(category_dict)
+    top_five_dict = develop.top_five(count_dict)
     print(f' the top five occurring features are {top_five_dict}')
+    print('\n')
 
+    plot = develop.plot_data(top_five_dict)
+    print(f' the top five occurring features are {plot}')
 
 if __name__ == '__main__':
     main()

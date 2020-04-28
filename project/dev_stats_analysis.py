@@ -51,7 +51,7 @@ class DeveloperStats():
             'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
             'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
         }
-        with open('stats.csv', 'r') as file_ref:
+        with open(filename, 'r') as file_ref:
             temp_frequency_holder_dic = {}
             for line in file_ref.readlines()[1:]:
                 row = line.strip().split('|')

@@ -40,7 +40,6 @@ class TestCategorizeData(unittest.TestCase):
         input = 'categorizeData1.csv'
 
         actual_result = self.dev_stats.categorize_data(input)
-        # print(actual_result)
         expected_result = {'low_salary':
                            {'count': 1, 'min': 0, 'max': 50000, 'data': [
                                ['Argentina', 'Slightly satisfied', 'A business discipline (ex. accounting, finance, marketing)',

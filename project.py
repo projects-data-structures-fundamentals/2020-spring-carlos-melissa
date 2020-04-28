@@ -98,8 +98,11 @@ class DeveloperStats():
             'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
             'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
         }
+        salary_count_list = []
         for salary_category in category_dict:
-            frequency_data[salary_category]['count'] = category_dict[salary_category]['count'] # makes the count values the same as the previous method
+            frequency_data[salary_category]['count'] = (
+                category_dict[salary_category]['count']) # makes the count values the same as the previous method
+            salary_count_list.append(category_dict[salary_category]['count'])
             temp_frequency_holder_dic = {}
             for responses in category_dict[salary_category]['data']: # for responses in each salary category
                 languages = responses[-1] # picks out the LanguageWorkedWith column
@@ -114,7 +117,7 @@ class DeveloperStats():
                     temp_frequency_holder_dic[item] += 1
             frequency_data[salary_category]['data'] = temp_frequency_holder_dic
 
-        return frequency_data
+        return frequency_data, salary_count_list
     @classmethod
     def top_five(cls, count_dict):
         """
@@ -181,7 +184,7 @@ class DeveloperStats():
         return top_five_dict
 
     @classmethod
-    def plot_data(cls, top_five_dict):
+    def plot_data(cls, top_five_dict, counts):
         """
         This method requires the plotly library
         This method sorts through the dictionary returned from top_five() and
@@ -189,16 +192,27 @@ class DeveloperStats():
         top_five_dict: the dictionary returned from top_five()
         Returns: three plots that display the results of top_five_dict
         """
-
-        # for salary in top_five_dict:
-        #     for rankings in top_five_dict[salary]:
-        #         for data in top_five_dict[salary][rankings]:
-        #             print(data)
-        # animals=['giraffes', 'orangutans', 'monkeys']
-        #
-        # fig = go.Figure([go.Bar(x=animals, y=[20, 14, 23])])
-        # fig.show()
-
+        for salary in top_five_dict:
+            keys = []
+            values = []
+            for rankings in top_five_dict[salary]:
+                counter = 0
+                for data in top_five_dict[salary][rankings]:
+                    rounded_value = round(top_five_dict[salary][rankings][data]/counts[counter], 4)
+                    values.append(rounded_value * 100)
+                    if data == 'Computer science, computer engineering, or software engineering':
+                        data = 'Computer Science'
+                    keys.append(data)
+                counter += 1
+            fig = go.Figure([go.Bar(x=keys, y=values)])
+            #fig.update_xaxes(tickangle=10)
+            fig.update_layout(
+                title = (str(salary) + " top five occurring features"),
+                xaxis_title = "Features",
+                yaxis_title = "Percentages"
+            )
+            fig.show()
+        return("Created plots")
 
 def main():
     """
@@ -214,7 +228,7 @@ def main():
     print(f' categorized data in {filename} is: {result}')
     print("\n")
 
-    count_dict = develop.count_data(category_dict)
+    count_dict, counts = develop.count_data(category_dict)
     print(f' counted categories in {filename} are: {category_dict}')
     print("\n")
 
@@ -222,8 +236,8 @@ def main():
     print(f' the top five occurring features are {top_five_dict}')
     print('\n')
 
-    plot = develop.plot_data(top_five_dict)
-    print(f' the top five occurring features are {plot}')
+    plot = develop.plot_data(top_five_dict, counts)
+    print(f'{plot}')
 
 if __name__ == '__main__':
     main()

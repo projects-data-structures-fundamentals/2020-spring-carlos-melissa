@@ -77,10 +77,12 @@ class DeveloperStats():
     @classmethod
     def count_data(cls, category_dict):
         """
-        This method sorts through the CSV file provided from filename and
-        counts the occurrance of respondant's answers in each salary category
-        filename: name of a CSV file (string)
-        Returns: dictionary
+        This method sorts through the dictionary provided from categorize_data
+        and counts the occurrance of respondant's answers in each salary
+        category
+        category_dict: dictionary returned from categorize_data()
+        Returns: dictionary and list of number of respondents in each salary
+        category (integers)
             keys: salary category (strings)
             values: dictionary
                 keys: summary data from the method calculation (including count
@@ -124,7 +126,7 @@ class DeveloperStats():
         This method sorts through the dictionary returned from
         count_data() and determines the top five results for each salary
         category
-        category_dict: the dictionary returned from count_data()
+        count_dict: the dictionary returned from count_data()
         Returns: dictionary
             keys: salary category (strings)
             values: dictionary
@@ -190,6 +192,8 @@ class DeveloperStats():
         This method sorts through the dictionary returned from top_five() and
         plots the occurrance of answers for each salary category
         top_five_dict: the dictionary returned from top_five()
+        counts: list of number of respondents in each salary category
+        (integers), returned from count_data()
         Returns: three plots that display the results of top_five_dict
         """
         for salary in top_five_dict:
@@ -225,11 +229,11 @@ def main():
     print("\n")
 
     category_dict = develop.categorize_data(filename)
-    print(f' categorized data in {filename} is: {result}')
+    print(f' categorized data in {filename} is: {category_dict}')
     print("\n")
 
     count_dict, counts = develop.count_data(category_dict)
-    print(f' counted categories in {filename} are: {category_dict}')
+    print(f' counted categories in {filename} are: {count_dict}')
     print("\n")
 
     top_five_dict = develop.top_five(count_dict)

@@ -1,12 +1,10 @@
-
-import plotly.graph_objects as go
-
 """
 project.py
 Final project for COMP 525
 Carlos Sandoval & Melissa Mullen
 Updated April 26, 2020
 """
+import plotly.graph_objects as go
 
 
 class DeveloperStats():
@@ -51,7 +49,7 @@ class DeveloperStats():
             'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
             'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
         }
-        with open(filename, 'r') as file_ref:
+        with open('stats.csv', 'r') as file_ref:
             temp_frequency_holder_dic = {}
             for line in file_ref.readlines()[1:]:
                 row = line.strip().split('|')
@@ -81,10 +79,12 @@ class DeveloperStats():
     @classmethod
     def count_data(cls, category_dict):
         """
-        This method sorts through the CSV file provided from filename and
-        counts the occurrance of respondant's answers in each salary category
-        filename: name of a CSV file (string)
-        Returns: dictionary
+        This method sorts through the dictionary provided from categorize_data
+        and counts the occurrance of respondant's answers in each salary
+        category
+        category_dict: dictionary returned from categorize_data()
+        Returns: dictionary and list of number of respondents in each salary
+        category (integers)
             keys: salary category (strings)
             values: dictionary
                 keys: summary data from the method calculation (including count
@@ -102,9 +102,11 @@ class DeveloperStats():
             'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
             'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
         }
+        salary_count_list = []
         for salary_category in category_dict:
-            # makes the count values the same as the previous method
-            frequency_data[salary_category]['count'] = category_dict[salary_category]['count']
+            frequency_data[salary_category]['count'] = (
+                category_dict[salary_category]['count'])  # makes the count values the same as the previous method
+            salary_count_list.append(category_dict[salary_category]['count'])
             temp_frequency_holder_dic = {}
             # for responses in each salary category
             for responses in category_dict[salary_category]['data']:
@@ -125,7 +127,7 @@ class DeveloperStats():
                     temp_frequency_holder_dic[item] += 1
             frequency_data[salary_category]['data'] = temp_frequency_holder_dic
 
-        return frequency_data
+        return frequency_data, salary_count_list
 
     @classmethod
     def top_five(cls, count_dict):
@@ -133,7 +135,7 @@ class DeveloperStats():
         This method sorts through the dictionary returned from
         count_data() and determines the top five results for each salary
         category
-        category_dict: the dictionary returned from count_data()
+        count_dict: the dictionary returned from count_data()
         Returns: dictionary
             keys: salary category (strings)
             values: dictionary
@@ -201,23 +203,38 @@ class DeveloperStats():
         return top_five_dict
 
     @classmethod
-    def plot_data(cls, top_five_dict):
+    def plot_data(cls, top_five_dict, counts):
         """
         This method requires the plotly library
         This method sorts through the dictionary returned from top_five() and
         plots the occurrance of answers for each salary category
         top_five_dict: the dictionary returned from top_five()
+        counts: list of number of respondents in each salary category
+        (integers), returned from count_data()
         Returns: three plots that display the results of top_five_dict
         """
-
-        # for salary in top_five_dict:
-        #     for rankings in top_five_dict[salary]:
-        #         for data in top_five_dict[salary][rankings]:
-        #             print(data)
-        # animals=['giraffes', 'orangutans', 'monkeys']
-        #
-        # fig = go.Figure([go.Bar(x=animals, y=[20, 14, 23])])
-        # fig.show()
+        for salary in top_five_dict:
+            keys = []
+            values = []
+            for rankings in top_five_dict[salary]:
+                counter = 0
+                for data in top_five_dict[salary][rankings]:
+                    rounded_value = round(
+                        top_five_dict[salary][rankings][data]/counts[counter], 4)
+                    values.append(rounded_value * 100)
+                    if data == 'Computer science, computer engineering, or software engineering':
+                        data = 'Computer Science'
+                    keys.append(data)
+                counter += 1
+            fig = go.Figure([go.Bar(x=keys, y=values)])
+            # fig.update_xaxes(tickangle=10)
+            fig.update_layout(
+                title=(str(salary) + " top five occurring features"),
+                xaxis_title="Features",
+                yaxis_title="Percentages"
+            )
+            fig.show()
+        return("Created plots")
 
 
 def main():
@@ -231,18 +248,19 @@ def main():
     print("\n")
 
     category_dict = develop.categorize_data(filename)
-    print(f' categorized data in {filename} is: {result}')
+    print(f' categorized data in {filename} is: {category_dict}')
     print("\n")
 
-    count_dict = develop.count_data(category_dict)
-    print(f' counted categories in {filename} are: {category_dict}')
+    count_dict, counts = develop.count_data(category_dict)
+    print(f' counted categories in {filename} are: {count_dict}')
     print("\n")
 
     top_five_dict = develop.top_five(count_dict)
     print(f' the top five occurring features are {top_five_dict}')
     print('\n')
 
-    plot = develop.plot_data(top_five_dict)
+    plot = develop.plot_data(top_five_dict, counts)
+    print(f'{plot}')
 
 
 if __name__ == '__main__':

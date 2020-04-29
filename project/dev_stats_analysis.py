@@ -142,6 +142,8 @@ class DeveloperStats():
                     keys: name of feature (string)
                     values: count of occurrence of feature (integer)
         """
+        print(count_dict.keys())
+
         top_five_dict = {}
         for key in count_dict.keys():
             top_five_dict[key] = {}
@@ -241,7 +243,6 @@ def main():
     print('\n')
 
     plot = develop.plot_data(top_five_dict)
-    print(f' the top five occurring features are {plot}')
 
 
 if __name__ == '__main__':

@@ -27,20 +27,19 @@ class DeveloperStats():
     def categorize_data(cls, filename):
         """
         This method sorts through the CSV file provided from filename and sorts
-        the responses into three categories (low_salary, medium_salary,
-        high_salary) based on their salary
+        the responses into three categories based on their salary values:
+        low_salary, medium_salary,and high_salary
         filename: name of a CSV file (string)
         returns: dictionary
             keys: salary category (string)
             values: dictionary
                 keys: summary data from the method calculation (including count
                 of responses, min salary, max salary, and data) (strings)
-                values: the count of respondants (integer), min salary
-                (integer), max salary (integer), and a list of lists containing
-                responses
+                values: the count of respondants (integer), minimum salary
+                (integer), maximum salary (integer), and a list of lists
+                containing string responses
         """
         data_columns = DeveloperStats.get_column_names(filename)
-        target_column_index = 4
         low_salary_list = []
         medium_salary_list = []
         high_salary_list = []
@@ -53,17 +52,15 @@ class DeveloperStats():
             temp_frequency_holder_dic = {}
             for line in file_ref.readlines()[1:]:
                 row = line.strip().split('|')
-                field_salary = float(row[target_column_index])
-                del row[0]  # respondant id
-                del row[3]  # salary
-                del row[4]  # gender
-                del row[4]  # race
-                del row[6]  # age
+                field_salary = float(row[4])
+                del row[0] # respondant id
+                del row[3] # salary
+                del row[4] # gender
+                del row[4] # race
+                del row[6] # age
                 if field_salary <= 50000:
-                    # appends this response to low_salary_list
-                    low_salary_list.append(row)
-                    # count increases
-                    frequency_data['low_salary']['count'] += 1
+                    low_salary_list.append(row) # appends this response to low_salary_list
+                    frequency_data['low_salary']['count'] += 1 # count increases
                 elif field_salary <= 80000:
                     medium_salary_list.append(row)
                     frequency_data['medium_salary']['count'] += 1
@@ -79,12 +76,10 @@ class DeveloperStats():
     @classmethod
     def count_data(cls, category_dict):
         """
-        This method sorts through the dictionary provided from categorize_data
-        and counts the occurrance of respondant's answers in each salary
-        category
-        category_dict: dictionary returned from categorize_data()
-        Returns: dictionary and list of number of respondents in each salary
-        category (integers)
+        This method sorts through the CSV file provided from filename and
+        counts the occurrance of respondant's answers in each salary category
+        filename: name of a CSV file (string)
+        Returns: dictionary
             keys: salary category (strings)
             values: dictionary
                 keys: summary data from the method calculation (including count
@@ -105,37 +100,30 @@ class DeveloperStats():
         salary_count_list = []
         for salary_category in category_dict:
             frequency_data[salary_category]['count'] = (
-                category_dict[salary_category]['count'])  # makes the count values the same as the previous method
+                category_dict[salary_category]['count']) # makes the count values the same as the previous method
             salary_count_list.append(category_dict[salary_category]['count'])
             temp_frequency_holder_dic = {}
-            # for responses in each salary category
-            for responses in category_dict[salary_category]['data']:
-                # picks out the LanguageWorkedWith column
-                languages = responses[-1]
-                list_of_languages = languages.split(';')  # parses it
+            for responses in category_dict[salary_category]['data']: # for responses in each salary category
+                languages = responses[-1] # picks out the LanguageWorkedWith column
+                list_of_languages = languages.split(';') # parses it
                 for language in list_of_languages:
-                    # if it's not a key already...
-                    if(language not in temp_frequency_holder_dic):
-                        # make it a key value pair
-                        temp_frequency_holder_dic[language] = 0
-                    # increment by one with each occurrance
-                    temp_frequency_holder_dic[language] += 1
-                # for all other features except languages
-                for item in responses[:-1]:
+                    if(language not in temp_frequency_holder_dic): # if it's not a key already...
+                        temp_frequency_holder_dic[language] = 0 # make it a key value pair
+                    temp_frequency_holder_dic[language] += 1 # increment by one with each occurrance
+                for item in responses[:-1]: # for all other features except languages
                     if(item not in temp_frequency_holder_dic):
                         temp_frequency_holder_dic[item] = 0
                     temp_frequency_holder_dic[item] += 1
             frequency_data[salary_category]['data'] = temp_frequency_holder_dic
 
         return frequency_data, salary_count_list
-
     @classmethod
     def top_five(cls, count_dict):
         """
         This method sorts through the dictionary returned from
         count_data() and determines the top five results for each salary
         category
-        count_dict: the dictionary returned from count_data()
+        category_dict: the dictionary returned from count_data()
         Returns: dictionary
             keys: salary category (strings)
             values: dictionary
@@ -144,25 +132,19 @@ class DeveloperStats():
                     keys: name of feature (string)
                     values: count of occurrence of feature (integer)
         """
-        print(count_dict.keys())
-
         top_five_dict = {}
         for key in count_dict.keys():
             top_five_dict[key] = {}
             temp_count = {'one': 0, 'two': 0, 'three': 0, 'four': 0, 'five': 0}
-            # for responses in each salary category
-            for category in count_dict[key]['data']:
-                item_count = (count_dict[key]['data']
-                              [category])  # count of feature
-                # if count is greater than largest feature
-                if item_count > temp_count['one']:
+            for category in count_dict[key]['data']: # for responses in each salary category
+                item_count = (count_dict[key]['data'][category]) # count of feature
+                if item_count > temp_count['one']: # if count is greater than largest feature
                     # move all the other features down a notch
                     temp_count['five'] = temp_count['four']
                     temp_count['four'] = temp_count['three']
                     temp_count['three'] = temp_count['two']
                     temp_count['two'] = temp_count['one']
-                    # make this feature the largest feature
-                    temp_count['one'] = item_count
+                    temp_count['one'] = item_count # make this feature the largest feature
 
                 elif item_count > temp_count['two']:
                     temp_count['five'] = temp_count['four']
@@ -182,12 +164,10 @@ class DeveloperStats():
                 elif item_count > temp_count['five']:
                     temp_count['five'] = item_count
 
-            keys = list(count_dict[key]['data'].keys())  # a list of the keys
-            # a list of the values
-            values = list(count_dict[key]['data'].values())
+            keys = list(count_dict[key]['data'].keys()) # a list of the keys
+            values = list(count_dict[key]['data'].values()) # a list of the values
 
-            # finding the key associated with the value pair
-            one = keys[values.index(temp_count['one'])]
+            one = keys[values.index(temp_count['one'])] # finding the key associated with the value pair
             two = keys[values.index(temp_count['two'])]
             three = keys[values.index(temp_count['three'])]
             four = keys[values.index(temp_count['four'])]
@@ -209,8 +189,6 @@ class DeveloperStats():
         This method sorts through the dictionary returned from top_five() and
         plots the occurrance of answers for each salary category
         top_five_dict: the dictionary returned from top_five()
-        counts: list of number of respondents in each salary category
-        (integers), returned from count_data()
         Returns: three plots that display the results of top_five_dict
         """
         for salary in top_five_dict:
@@ -219,23 +197,21 @@ class DeveloperStats():
             for rankings in top_five_dict[salary]:
                 counter = 0
                 for data in top_five_dict[salary][rankings]:
-                    rounded_value = round(
-                        top_five_dict[salary][rankings][data]/counts[counter], 4)
+                    rounded_value = round(top_five_dict[salary][rankings][data]/counts[counter], 4)
                     values.append(rounded_value * 100)
                     if data == 'Computer science, computer engineering, or software engineering':
                         data = 'Computer Science'
                     keys.append(data)
                 counter += 1
             fig = go.Figure([go.Bar(x=keys, y=values)])
-            # fig.update_xaxes(tickangle=10)
+            #fig.update_xaxes(tickangle=10)
             fig.update_layout(
-                title=(str(salary) + " top five occurring features"),
-                xaxis_title="Features",
-                yaxis_title="Percentages"
+                title = (str(salary) + " top five occurring features"),
+                xaxis_title = "Features",
+                yaxis_title = "Percentages"
             )
             fig.show()
         return("Created plots")
-
 
 def main():
     """
@@ -248,11 +224,11 @@ def main():
     print("\n")
 
     category_dict = develop.categorize_data(filename)
-    print(f' categorized data in {filename} is: {category_dict}')
+    print(f' categorized data in {filename} is: {result}')
     print("\n")
 
     count_dict, counts = develop.count_data(category_dict)
-    print(f' counted categories in {filename} are: {count_dict}')
+    print(f' counted categories in {filename} are: {category_dict}')
     print("\n")
 
     top_five_dict = develop.top_five(count_dict)
@@ -261,7 +237,6 @@ def main():
 
     plot = develop.plot_data(top_five_dict, counts)
     print(f'{plot}')
-
 
 if __name__ == '__main__':
     main()

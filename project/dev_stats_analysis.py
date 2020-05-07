@@ -76,15 +76,17 @@ class DeveloperStats():
     @classmethod
     def count_data(cls, categorized_data):
         """
-        This method sorts though the 'data' field in the categorize_data
-        parameter, which is a list of records, and counts the frequency in
-        which they appear in all data within the category.
-        Returns: a new dictionary containing a string key for every category,
-        and a dictionary as a value which contains a 'count'
-        (number of records/entries) on the category, min and max integer values
-        (for the range), and data dictionary, which contains a dictionary with
-        the values name string as key, a the frequency in which they
-        repeat within the category as a integer value
+        This method sorts though the 'data' field in categorize_data, which is
+        the dictionary returned from categorize_data(), and counts the
+        frequency in which characteristics appear within the salary category.
+        Returns: dictionary
+            keys: string type key for every salary category
+            values: a dictionary containing a 'count' (number of records /
+            entries) for each category, min and max integer values
+            (for the range), and another data dictionary, which contains
+            a dictionary with the string type name of characteristics
+            as keys and the frequency in which they repeat within the category
+            as a integer value
 
 
         """

@@ -29,11 +29,9 @@ class DeveloperStats():
         This method sorts through the CSV file provided from filename and sorts
         the responses into three categories based on their salary values:
         low_salary, medium_salary,and high_salary. Each category has a min, max
-        for the range, and data. Where data is a nested list of records containing
-        the records that belong within the category.
-
+        for the range, and data. Where data is a nested list of records
+        containingthe records that belong within the category.
         filename: name of a CSV file (string)
-
         returns: dictionary
             keys: salary category (string)
             values:
@@ -78,13 +76,14 @@ class DeveloperStats():
     @classmethod
     def count_data(cls, categorized_data):
         """
-        This methid goes though the 'data' fierld in the categorize_data
-        paramenter, which is a list of records, and count the frequency in
-        which they appear on all data within the category. it returns
-        a new dictionary containing a string key for every category, and a dictionary
-        as a value which contains a 'count' (number of records/entries) on the category,
-        min and max integer values (for the range), and data dictionary, which contains
-        a dictionary with the values name string as key, a the frequency in which they
+        This method sorts though the 'data' field in the categorize_data
+        parameter, which is a list of records, and counts the frequency in
+        which they appear in all data within the category.
+        Returns: a new dictionary containing a string key for every category,
+        and a dictionary as a value which contains a 'count'
+        (number of records/entries) on the category, min and max integer values
+        (for the range), and data dictionary, which contains a dictionary with
+        the values name string as key, a the frequency in which they
         repeat within the category as a integer value
 
 
@@ -227,7 +226,6 @@ def main():
     # print('\n')
 
     plot = develop.plot_data(top_five_dict)
-    # print(f'{plot}')
 
 if __name__ == '__main__':
     main()

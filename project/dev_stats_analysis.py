@@ -81,12 +81,12 @@ class DeveloperStats():
         frequency in which characteristics appear within the salary category.
         Returns: dictionary
             keys: string type key for every salary category
-            values: a dictionary containing a 'count' (number of records /
-            entries) for each category, min and max integer values
+            values: a dictionary containing a 'count' (integer values of
+            records/entries) for each category, min and max integer values
             (for the range), and another data dictionary, which contains
             a dictionary with the string type name of characteristics
             as keys and the frequency in which they repeat within the category
-            as a integer value
+            as integer values.
         """
         frequency_data = {
             'low_salary': {'count': 0, 'min': 0, 'max': 50000, 'data': {}},
@@ -102,7 +102,7 @@ class DeveloperStats():
           category_data_list = category_dict['data']
 
           #updating count according to number of records/entries in category data
-          frequency_data[category_name]['count'] = len(category_dict['data'])
+          frequency_data[category_name]['count'] = len(category_data_list)
 
           #iterating though records/entries in the current category data
           for records in category_data_list:
@@ -232,8 +232,8 @@ def main():
     print("\n")
 
     top_five_dict = develop.top_five(count_dict)
-    # print(f' the top five occurring features are {top_five_dict}')
-    # print('\n')
+    print(f' the top five occurring features are {top_five_dict}')
+    print('\n')
 
     plot = develop.plot_data(top_five_dict)
 

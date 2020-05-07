@@ -109,12 +109,23 @@ class DeveloperStats():
             for column_index, field in enumerate(records):
 
               #ignore the following columns
-              if column_index not in [0, 4, 6, 12]: # add any column to be ignore here (NOTE: I'm ignoring programing language for now)
+              if column_index not in [0, 4, 6, 7, 12]: # add any column to be ignore here (NOTE: I'm ignoring programing language for now)
 
-                #inserting new fields into the corresponging 'data' dictionary in category if it doesnt' exit, and increment
-                if field not in frequency_data[category_name]['data']:
-                  frequency_data[category_name]['data'][field] = 0
-                frequency_data[category_name]['data'][field] += 1
+                #check whether if field contains multiple values
+                if ';' in field:
+                  values = field.split(';')
+
+                  for value in values:
+
+                    if value not in frequency_data[category_name]['data']:
+                      frequency_data[category_name]['data'][value] = 0
+                    frequency_data[category_name]['data'][value] += 1
+                else:
+                  #append on this way this if field doesn't contain multiple value
+                  #inserting new fields into the corresponging 'data' dictionary in category if it doesnt' exit, and increment
+                  if field not in frequency_data[category_name]['data']:
+                    frequency_data[category_name]['data'][field] = 0
+                  frequency_data[category_name]['data'][field] += 1
 
         return frequency_data
 

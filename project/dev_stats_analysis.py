@@ -87,8 +87,6 @@ class DeveloperStats():
             a dictionary with the string type name of characteristics
             as keys and the frequency in which they repeat within the category
             as a integer value
-
-
         """
         frequency_data = {
             'low_salary': {'count': 0, 'min': 0, 'max': 50000, 'data': {}},
@@ -138,29 +136,36 @@ class DeveloperStats():
     def top_five(cls, count_dict):
         """
         This method sorts through the dictionary returned from
-        count_data() and determines the top five highest frequency
-        fields results for each salary category.
+        count_data() and determines the top five features with
+        the highest frequency on each salary category.
         category_dict: the dictionary returned from count_data()
-
         Returns: dictionary
-            keys: salary category (strings)
+            keys: salary category (string)
             values: dictionary
-                keys: rankings (strings)
+                keys: 'data' (string)
                 values: dictionary
-                    keys: name of feature (string)
-                    values: count of occurrence of feature (integer)
-        """
-        #shallow copy works perfectly bc we actually need data dict empty
+                   keys:  count (string)
+                          min (string)
+                          max (string)
+                          data (dictionary)
+                            keys: feature (string)
+                            values: frequency (integer)
+                """
+        #shallow copy
         top_five = count_dict.copy()
 
+        #iterating though the categories
         for category_name in count_dict:
 
+          #place holder variable and cleaning top_five category data
           category_data = count_dict[category_name]['data']
           top_five[category_name]['data'] = {}
 
+          #iterates though the list of tuples resurt of the sorted function
+          #that uses lambda to sort list by items, intead of keys
           for tuple_field in sorted(category_data.items(), key=lambda tuple_item: tuple_item[1])[-5:]:
             field, value = tuple_field
-
+            #assigning top sorted features to data fields
             top_five[category_name]['data'][field] = value
 
         return top_five
@@ -172,24 +177,26 @@ class DeveloperStats():
         This method sorts through the dictionary returned from top_five() and
         plots the occurrance of answers for each salary category
         top_five_dict: the dictionary returned from top_five()
-        counts: the list returned from count_data()
         Returns: three plots that display the results of top_five_dict
         """
-
+        #iterates through categories
         for salary_category in top_five_dict:
+          #create labels and percentages for category
           labels = []
           percentages = []
 
           for field_name in top_five_dict[salary_category]['data']:
 
+            #get field name and frequency for each field
             field_frequency = top_five_dict[salary_category]['data'][field_name]
             total_frequency = top_five_dict[salary_category]['count']
 
+            #calculate percentage
             percentage = int((field_frequency / total_frequency) * 100)
             percentages.append(percentage)
 
+            #create and format labels
             label = field_name
-
             if label == 'Computer science, computer engineering, or software engineering':
                 label = label[:16]
             labels.append(label + " " + str(percentage) + "%")
@@ -204,6 +211,7 @@ class DeveloperStats():
           )
           fig.show()
         return("Created plots")
+
 
 def main():
     """

@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 class DeveloperStats():
     """
     Reads information from a CSV file, categorizes the data by salary, counts
-    the occurrance of features, and plots the results
+    the occurrence of features, and plots the results
     """
     @classmethod
     def get_column_names(cls, filename):
@@ -33,6 +33,7 @@ class DeveloperStats():
         the records that belong within the category.
 
         filename: name of a CSV file (string)
+
         returns: dictionary
             keys: salary category (string)
             values:
@@ -62,6 +63,7 @@ class DeveloperStats():
                 field_salary = float(record[salary_index])
 
                 #categorizing record according to the salary range
+
                 if field_salary <= 50000:
                     categorized_data['low_salary']['data'].append(record)
 
@@ -84,6 +86,7 @@ class DeveloperStats():
         min and max integer values (for the range), and data dictionary, which contains
         a dictionary with the values name string as key, a the frequency in which they
         repeat within the category as a integer value
+
 
         """
         frequency_data = {
@@ -129,6 +132,7 @@ class DeveloperStats():
 
         return frequency_data
 
+
     @classmethod
     def top_five(cls, count_dict):
         """
@@ -136,6 +140,7 @@ class DeveloperStats():
         count_data() and determines the top five highest frequency
         fields results for each salary category.
         category_dict: the dictionary returned from count_data()
+
         Returns: dictionary
             keys: salary category (strings)
             values: dictionary
@@ -166,6 +171,7 @@ class DeveloperStats():
         This method sorts through the dictionary returned from top_five() and
         plots the occurrance of answers for each salary category
         top_five_dict: the dictionary returned from top_five()
+        counts: the list returned from count_data()
         Returns: three plots that display the results of top_five_dict
         """
 

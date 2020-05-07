@@ -29,11 +29,9 @@ class DeveloperStats():
         This method sorts through the CSV file provided from filename and sorts
         the responses into three categories based on their salary values:
         low_salary, medium_salary,and high_salary. Each category has a min, max
-        for the range, and data. Where data is a nested list of records containing
-        the records that belong within the category.
-
+        for the range, and data. Where data is a nested list of records
+        containingthe records that belong within the category.
         filename: name of a CSV file (string)
-
         returns: dictionary
             keys: salary category (string)
             values:
@@ -78,16 +76,17 @@ class DeveloperStats():
     @classmethod
     def count_data(cls, categorized_data):
         """
-        This methid goes though the 'data' fierld in the categorize_data
-        paramenter, which is a list of records, and count the frequency in
-        which they appear on all data within the category. it returns
-        a new dictionary containing a string key for every category, and a dictionary
-        as a value which contains a 'count' (number of records/entries) on the category,
-        min and max integer values (for the range), and data dictionary, which contains
-        a dictionary with the values name string as key, a the frequency in which they
-        repeat within the category as a integer value
-
-
+        This method sorts though the 'data' field in categorize_data, which is
+        the dictionary returned from categorize_data(), and counts the
+        frequency in which characteristics appear within the salary category.
+        Returns: dictionary
+            keys: string type key for every salary category
+            values: a dictionary containing a 'count' (number of records /
+            entries) for each category, min and max integer values
+            (for the range), and another data dictionary, which contains
+            a dictionary with the string type name of characteristics
+            as keys and the frequency in which they repeat within the category
+            as a integer value
         """
         frequency_data = {
             'low_salary': {'count': 0, 'min': 0, 'max': 50000, 'data': {}},
@@ -137,11 +136,9 @@ class DeveloperStats():
     def top_five(cls, count_dict):
         """
         This method sorts through the dictionary returned from
-        count_data() and determines the top five features with 
+        count_data() and determines the top five features with
         the highest frequency on each salary category.
-
         category_dict: the dictionary returned from count_data()
-
         Returns: dictionary
             keys: salary category (string)
             values: dictionary
@@ -154,12 +151,12 @@ class DeveloperStats():
                             keys: feature (string)
                             values: frequency (integer)
                 """
-        #shallow copy 
+        #shallow copy
         top_five = count_dict.copy()
 
-        #iterating though the categories 
+        #iterating though the categories
         for category_name in count_dict:
-          
+
           #place holder variable and cleaning top_five category data
           category_data = count_dict[category_name]['data']
           top_five[category_name]['data'] = {}
@@ -215,30 +212,30 @@ class DeveloperStats():
           fig.show()
         return("Created plots")
 
+
 def main():
     """
     Contains test cases for the DeveloperStats class methods
     """
     develop = DeveloperStats()
     filename = 'stats.csv'
-    # result = develop.get_column_names(filename)
-    # print(f' column names in {filename} are: {result}')
-    # print("\n")
+    result = develop.get_column_names(filename)
+    print(f' column names in {filename} are: {result}')
+    print("\n")
 
     category_dict = develop.categorize_data(filename)
-    # print(f' categorized data in {filename} is: {category_dict}')
-    # print("\n")
+    print(f' categorized data in {filename} is: {category_dict}')
+    print("\n")
 
     count_dict = develop.count_data(category_dict)
-    # print(f' counted categories in {filename} are: {count_dict}')
-    # print("\n")
+    print(f' counted categories in {filename} are: {count_dict}')
+    print("\n")
 
     top_five_dict = develop.top_five(count_dict)
-    print(f' the top five occurring features are {top_five_dict}')
-    print('\n')
+    # print(f' the top five occurring features are {top_five_dict}')
+    # print('\n')
 
-    # plot = develop.plot_data(top_five_dict)
-    # # print(f'{plot}')
+    plot = develop.plot_data(top_five_dict)
 
 if __name__ == '__main__':
     main()

@@ -109,7 +109,7 @@ class DeveloperStats():
             for column_index, field in enumerate(records):
 
               #ignore the following columns
-              if column_index not in [0, 4, 6, 7, 12]: # add any column to be ignore here (NOTE: I'm ignoring programing language for now)
+              if column_index not in [0, 4, 6, 7, 12, 10]: # add any column to be ignore here (NOTE: I'm ignoring programing language for now)
 
                 #check whether if field contains multiple values
                 if ';' in field:

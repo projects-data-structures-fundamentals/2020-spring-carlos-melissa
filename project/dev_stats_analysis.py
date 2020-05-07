@@ -174,8 +174,7 @@ class DeveloperStats():
     def plot_data(cls, top_five_dict):
         """
         This method requires the plotly library
-        This method sorts through the dictionary returned from top_five() and
-        plots the occurrance of answers for each salary category
+        This method sorts through the dictionary returned from top_five() and plots the occurrence of answers for each salary category
         top_five_dict: the dictionary returned from top_five()
         Returns: three plots that display the results of top_five_dict
         """

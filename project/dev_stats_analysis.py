@@ -24,7 +24,7 @@ class DeveloperStats():
             return file_ref.readline().strip().split('|')
 
     @classmethod
-    def categorize_data(cls, filename):
+    def categorize_data(cls, filename, data_columns):
         """
         This method sorts through the CSV file provided from filename and sorts
         the responses into three categories based on their salary values:
@@ -39,7 +39,6 @@ class DeveloperStats():
                 (integer), maximum salary (integer), and a list of lists
                 containing string responses
         """
-        data_columns = DeveloperStats.get_column_names(filename)
         low_salary_list = []
         medium_salary_list = []
         high_salary_list = []
@@ -48,11 +47,13 @@ class DeveloperStats():
             'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
             'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
         }
+
+        salary_index = (data_columns.index('ConvertedSalary'))
         with open('stats.csv', 'r') as file_ref:
             temp_frequency_holder_dic = {}
             for line in file_ref.readlines()[1:]:
                 row = line.strip().split('|')
-                field_salary = float(row[4])
+                field_salary = float(row[salary_index])
                 del row[0] # respondant id
                 del row[3] # salary
                 del row[4] # gender
@@ -223,12 +224,12 @@ def main():
     print(f' column names in {filename} are: {result}')
     print("\n")
 
-    category_dict = develop.categorize_data(filename)
-    print(f' categorized data in {filename} is: {result}')
+    category_dict = develop.categorize_data(filename, result)
+    print(f' categorized data in {filename} is: {category_dict}')
     print("\n")
 
     count_dict, counts = develop.count_data(category_dict)
-    print(f' counted categories in {filename} are: {category_dict}')
+    print(f' counted categories in {filename} are: {count_dict}')
     print("\n")
 
     top_five_dict = develop.top_five(count_dict)

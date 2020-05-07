@@ -24,53 +24,55 @@ class DeveloperStats():
             return file_ref.readline().strip().split('|')
 
     @classmethod
-    def categorize_data(cls, filename, data_columns):
+    def categorize_data(cls, filename):
         """
         This method sorts through the CSV file provided from filename and sorts
         the responses into three categories based on their salary values:
-        low_salary, medium_salary,and high_salary
+        low_salary, medium_salary,and high_salary. Each category has a min, max
+        for the range, and data. Where data is a nested list of records containing
+        the records that belong within the category.
+
         filename: name of a CSV file (string)
         returns: dictionary
             keys: salary category (string)
-            values: dictionary
-                keys: summary data from the method calculation (including count
-                of responses, min salary, max salary, and data) (strings)
-                values: the count of respondants (integer), minimum salary
-                (integer), maximum salary (integer), and a list of lists
-                containing string responses
+            values:
+              - type integer numbers, for max and min.
+              - nested list for data 
         """
-        low_salary_list = []
-        medium_salary_list = []
-        high_salary_list = []
-        frequency_data = {
-            'low_salary': {'count': 0, 'min': 0, 'max': 50000, 'data': {}},
-            'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
-            'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
-        }
 
+        frequency_data = {
+          'low_salary': { 'min': 0, 'max': 50000, 'data': []},
+          'medium_salary': { 'min': 50001, 'max': 80000, 'data': []},
+          'high_salary':  { 'min': 80001, 'max': 200000, 'data': []}
+        }
+        #creating a list of the column names and finding index for salary column
+        data_columns = cls.get_column_names(filename)
         salary_index = (data_columns.index('ConvertedSalary'))
-        with open('stats.csv', 'r') as file_ref:
+
+        with open(filename, 'r') as file_ref:
+
+            #temporal dict to store frequency of values
             temp_frequency_holder_dic = {}
-            for line in file_ref.readlines()[1:]:
-                row = line.strip().split('|')
-                field_salary = float(row[salary_index])
-                del row[0] # respondant id
-                del row[3] # salary
-                del row[4] # gender
-                del row[4] # race
-                del row[6] # age
-                if field_salary <= 50000:
-                    low_salary_list.append(row) # appends this response to low_salary_list
-                    frequency_data['low_salary']['count'] += 1 # count increases
-                elif field_salary <= 80000:
-                    medium_salary_list.append(row)
-                    frequency_data['medium_salary']['count'] += 1
-                else:
-                    high_salary_list.append(row)
-                    frequency_data['high_salary']['count'] += 1
-        frequency_data['low_salary']['data'] = low_salary_list
-        frequency_data['medium_salary']['data'] = medium_salary_list
-        frequency_data['high_salary']['data'] = high_salary_list
+
+            for column_index, line in enumerate(file_ref.readlines()[1:]):
+
+                record = line.strip().split('|')
+
+                #taking value from the salary field
+                field_salary = float(record[salary_index])
+
+                #ignore the following columns
+                if column_index in [0, 3, 4, 6]: #add any column to be ignore here
+                
+                  #categorizing record according to the salary range
+                  if field_salary <= 50000:
+                      frequency_data['low_salary']['data'].append(record)
+
+                  elif field_salary <= 80000:
+                      frequency_data['medium_salary']['data'].append(record)
+
+                  else:
+                      frequency_data['high_salary']['data'].append(record)
 
         return frequency_data
 
@@ -101,8 +103,9 @@ class DeveloperStats():
         salary_count_list = []
         for salary_category in category_dict:
             frequency_data[salary_category]['count'] = (
-                category_dict[salary_category]['count']) # makes the count values the same as the previous method
-            salary_count_list.append(category_dict[salary_category]['count'])
+                len(category_dict[salary_category]['data']))  # makes the count values the same as the previous method
+            salary_count_list.append(
+                len(category_dict[salary_category]['data']))
             temp_frequency_holder_dic = {}
             for responses in category_dict[salary_category]['data']: # for responses in each salary category
                 languages = responses[-1] # picks out the LanguageWorkedWith column
@@ -224,7 +227,7 @@ def main():
     print(f' column names in {filename} are: {result}')
     print("\n")
 
-    category_dict = develop.categorize_data(filename, result)
+    category_dict = develop.categorize_data(filename)
     print(f' categorized data in {filename} is: {category_dict}')
     print("\n")
 

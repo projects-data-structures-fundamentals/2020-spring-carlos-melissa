@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 class DeveloperStats():
     """
     Reads information from a CSV file, categorizes the data by salary, counts
-    the occurrance of features, and plots the results
+    the occurrence of features, and plots the results
     """
     @classmethod
     def get_column_names(cls, filename):
@@ -24,12 +24,13 @@ class DeveloperStats():
             return file_ref.readline().strip().split('|')
 
     @classmethod
-    def categorize_data(cls, filename, data_columns):
+    def categorize_data(cls, filename):
         """
         This method sorts through the CSV file provided from filename and sorts
         the responses into three categories based on their salary values:
         low_salary, medium_salary,and high_salary
         filename: name of a CSV file (string)
+
         returns: dictionary
             keys: salary category (string)
             values: dictionary
@@ -48,12 +49,12 @@ class DeveloperStats():
             'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
         }
 
+        data_columns = DeveloperStats.get_column_names(filename)
         salary_index = (data_columns.index('ConvertedSalary'))
-        with open('stats.csv', 'r') as file_ref:
-            temp_frequency_holder_dic = {}
-            for line in file_ref.readlines()[1:]:
+        with open(filename, 'r') as file_ref:
+            for line in file_ref.readlines()[1:]: # all lines except title line
                 row = line.strip().split('|')
-                field_salary = float(row[salary_index])
+                field_salary = float(row[salary_index]) # the salary value
                 del row[0] # respondant id
                 del row[3] # salary
                 del row[4] # gender
@@ -79,7 +80,7 @@ class DeveloperStats():
         """
         This method sorts through the CSV file provided from filename and
         counts the occurrance of respondant's answers in each salary category
-        filename: name of a CSV file (string)
+        category_dict: the dictionary returned from categorize_data()
         Returns: dictionary
             keys: salary category (strings)
             values: dictionary
@@ -117,6 +118,7 @@ class DeveloperStats():
                     temp_frequency_holder_dic[item] += 1
             frequency_data[salary_category]['data'] = temp_frequency_holder_dic
 
+        print(salary_count_list)
         return frequency_data, salary_count_list
     @classmethod
     def top_five(cls, count_dict):
@@ -124,7 +126,7 @@ class DeveloperStats():
         This method sorts through the dictionary returned from
         count_data() and determines the top five results for each salary
         category
-        category_dict: the dictionary returned from count_data()
+        count_dict: the dictionary returned from count_data()
         Returns: dictionary
             keys: salary category (strings)
             values: dictionary
@@ -190,6 +192,7 @@ class DeveloperStats():
         This method sorts through the dictionary returned from top_five() and
         plots the occurrance of answers for each salary category
         top_five_dict: the dictionary returned from top_five()
+        counts: the list returned from count_data()
         Returns: three plots that display the results of top_five_dict
         """
         for salary in top_five_dict:
@@ -224,7 +227,7 @@ def main():
     print(f' column names in {filename} are: {result}')
     print("\n")
 
-    category_dict = develop.categorize_data(filename, result)
+    category_dict = develop.categorize_data(filename)
     print(f' categorized data in {filename} is: {category_dict}')
     print("\n")
 

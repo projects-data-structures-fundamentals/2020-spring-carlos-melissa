@@ -2,7 +2,7 @@
 project.py
 Final project for COMP 525
 Carlos Sandoval & Melissa Mullen
-Updated April 26, 2020
+Updated May 7, 2020
 """
 import plotly.graph_objects as go
 
@@ -37,7 +37,7 @@ class DeveloperStats():
             keys: salary category (string)
             values:
               - type integer numbers, for max and min.
-              - nested list for data 
+              - nested list for survey responses (strings)
         """
 
         categorized_data = {
@@ -76,14 +76,14 @@ class DeveloperStats():
     @classmethod
     def count_data(cls, categorized_data):
         """
-        This methid goes though the 'data' fierld in the categorize_data 
-        paramenter, which is a list of records, and count the frequency in 
+        This methid goes though the 'data' fierld in the categorize_data
+        paramenter, which is a list of records, and count the frequency in
         which they appear on all data within the category. it returns
-        a new dictionary containing a string key for every category, and a dictionary 
+        a new dictionary containing a string key for every category, and a dictionary
         as a value which contains a 'count' (number of records/entries) on the category,
-        min and max integer values (for the range), and data dictionary, which contains 
+        min and max integer values (for the range), and data dictionary, which contains
         a dictionary with the values name string as key, a the frequency in which they
-        repeat within the category as a integer value 
+        repeat within the category as a integer value
 
         """
         frequency_data = {
@@ -91,10 +91,10 @@ class DeveloperStats():
             'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
             'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
         }
-    
+
         #iterating though the categories in data
         for category_name in categorized_data:
-          
+
           #creating placeholder variables
           category_dict = categorized_data[category_name]
           category_data_list = category_dict['data']
@@ -109,7 +109,7 @@ class DeveloperStats():
             for column_index, field in enumerate(records):
 
               #ignore the following columns
-              if column_index not in [0, 4, 6, 7, 12, 10]: # add any column to be ignore here (NOTE: I'm ignoring programing language for now)
+              if column_index not in [0, 4, 6, 7, 10]: # add any column to be ignore here (NOTE: I'm ignoring programing language for now)
 
                 #check whether if field contains multiple values
                 if ';' in field:
@@ -154,7 +154,7 @@ class DeveloperStats():
 
           for tuple_field in sorted(category_data.items(), key=lambda tuple_item: tuple_item[1])[-5:]:
             field, value = tuple_field
-            
+
             top_five[category_name]['data'][field] = value
 
         return top_five
@@ -177,7 +177,7 @@ class DeveloperStats():
 
             field_frequency = top_five_dict[salary_category]['data'][field_name]
             total_frequency = top_five_dict[salary_category]['count']
-            
+
             percentage = int((field_frequency / total_frequency) * 100)
             percentages.append(percentage)
 
@@ -204,17 +204,17 @@ def main():
     """
     develop = DeveloperStats()
     filename = 'stats.csv'
-    # result = develop.get_column_names(filename)
-    # print(f' column names in {filename} are: {result}')
-    # print("\n")
+    result = develop.get_column_names(filename)
+    print(f' column names in {filename} are: {result}')
+    print("\n")
 
     category_dict = develop.categorize_data(filename)
-    # print(f' categorized data in {filename} is: {category_dict}')
-    # print("\n")
+    print(f' categorized data in {filename} is: {category_dict}')
+    print("\n")
 
     count_dict = develop.count_data(category_dict)
-    # print(f' counted categories in {filename} are: {count_dict}')
-    # print("\n")
+    print(f' counted categories in {filename} are: {count_dict}')
+    print("\n")
 
     top_five_dict = develop.top_five(count_dict)
     # print(f' the top five occurring features are {top_five_dict}')

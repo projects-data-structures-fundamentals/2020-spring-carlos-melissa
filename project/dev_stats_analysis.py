@@ -18,7 +18,7 @@ class DeveloperStats():
         This method sorts through the first line of the CSV file provided
         from filename and parses the column names into a list
         filename: name of a CSV file (string)
-        returns: list of strings (the names of the columns)
+        returns: list of the names of the columns (strings)
         """
         with open(filename, 'r') as file_ref:
             return file_ref.readline().strip().split('|')
@@ -28,15 +28,16 @@ class DeveloperStats():
         """
         This method sorts through the CSV file provided from filename and sorts
         the responses into three categories based on their salary values:
-        low_salary, medium_salary,and high_salary. Each category has a min, max
-        for the range, and data. Where data is a nested list of records
-        containingthe records that belong within the category.
+        low_salary, medium_salary,and high_salary. Each category has min and
+        max keys for the salary range as well as a data key. Data is a nested
+        list of survey responses for each salary category.
         filename: name of a CSV file (string)
         returns: dictionary
-            keys: salary category (string)
-            values:
-              - type integer numbers, for max and min.
-              - nested list for survey responses (strings)
+            keys: salary categories (strings)
+            values: dictionary
+                keys: min, max, data (strings)
+                values: min and max are positive integers (including zero),
+                data is a nested list containing survey results (strings)
         """
 
         categorized_data = {
@@ -78,16 +79,18 @@ class DeveloperStats():
         """
         This method sorts though the 'data' field in categorize_data, which is
         the dictionary returned from categorize_data(), and counts the
-        frequency in which characteristics appear within the salary category.
+        frequency in which specific answers appear within the salary category.
+        categorized_data: dictionary returned from categorize_data()
         Returns: dictionary
-            keys: string type key for every salary category
-            values: a dictionary containing a 'count' (integer values of
-            records/entries) for each category, min and max integer values
-            (for the range), and another data dictionary, which contains
-            a dictionary with the string type name of characteristics
-            as keys and the frequency in which they repeat within the category
-            as integer values.
+            keys: salary categories (strings)
+            values: dictionary
+                keys: count, min, max, data (strings)
+                values: count, min, and max are positive integers (including
+                zero), data is a dictionary
+                    keys: survey answers (strings)
+                    values: positive integers (including zero)
         """
+
         frequency_data = {
             'low_salary': {'count': 0, 'min': 0, 'max': 50000, 'data': {}},
             'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
@@ -137,20 +140,17 @@ class DeveloperStats():
         """
         This method sorts through the dictionary returned from
         count_data() and determines the top five features with
-        the highest frequency on each salary category.
-        category_dict: the dictionary returned from count_data()
+        the highest frequency in each salary category.
+        count_dict: the dictionary returned from count_data()
         Returns: dictionary
-            keys: salary category (string)
+            keys: salary category (strings)
             values: dictionary
-                keys: 'data' (string)
-                values: dictionary
-                   keys:  count (string)
-                          min (string)
-                          max (string)
-                          data (dictionary)
-                            keys: feature (string)
-                            values: frequency (integer)
-                """
+                keys: count, min, max, data (strings)
+                values: count, min, and max are positive integers
+                (including zero), data is a dictionary
+                    keys: features (strings)
+                    values: frequency (positive integers including zero)
+        """
         #shallow copy
         top_five = count_dict.copy()
 
@@ -174,7 +174,8 @@ class DeveloperStats():
     def plot_data(cls, top_five_dict):
         """
         This method requires the plotly library
-        This method sorts through the dictionary returned from top_five() and plots the occurrence of answers for each salary category
+        This method sorts through the dictionary returned from top_five() and
+        plots the occurrence of answers for each salary category
         top_five_dict: the dictionary returned from top_five()
         Returns: three plots that display the results of top_five_dict
         """
@@ -209,7 +210,6 @@ class DeveloperStats():
               yaxis_title = "Percentages"
           )
           fig.show()
-        return("Created plots")
 
 
 def main():

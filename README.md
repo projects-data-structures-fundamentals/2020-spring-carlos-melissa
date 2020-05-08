@@ -18,7 +18,7 @@ def get_column_names(cls, filename):
     This method sorts through the first line of the CSV file provided
     from filename and parses the column names into a list
     filename: name of a CSV file (string)
-    returns: list of strings (the names of the columns)
+    returns: list of the names of the columns (strings)
     """
 ```
 This method should only require two lines of code:
@@ -30,18 +30,14 @@ This method should only require two lines of code:
 @classmethod
 def categorize_data(cls, filename):
     """
-    This method sorts through the CSV file provided from filename and sorts
-    the responses into three categories based on their salary values:
-    low_salary, medium_salary, and high_salary. Each category has a min, max
-    for the range, and data. Where data is a nested list of records containing
-    the records that belong within the category.
-
+    This method sorts through the CSV file provided from filename and sorts the responses into three categories based on their salary values: low_salary, medium_salary, and high_salary. Each category has min and max keys for the salary range as well as a data key. Data is a nested
+    list of survey responses for each salary category.
     filename: name of a CSV file (string)
     returns: dictionary
-        keys: salary category (string)
-        values:
-          - type integer numbers, for max and min.
-          - nested list for for survey responses (strings)
+        keys: salary categories (strings)
+        values: dictionary
+            keys: min, max, data (strings)
+            values: min and max are positive integers (including zero), data is a nested list containing survey results (strings)    
     """
 ```
 To create this method, we will need to use the accumulation pattern and do the following:
@@ -73,17 +69,16 @@ To create this method, we will need to use the accumulation pattern and do the f
 @classmethod
 def count_data(cls, categorized_data):
     """
-    This method sorts though the 'data' field in categorize_data, which is
-    the dictionary returned from categorize_data(), and counts the
-    frequency in which characteristics appear within the salary category.
+    This method sorts though the 'data' field in categorize_data, which is the dictionary returned from categorize_data(), and counts the frequency in which specific answers appear within the salary category.
+    categorized_data: dictionary returned from categorize_data()
     Returns: dictionary
-        keys: string type key for every salary category
-        values: a dictionary containing a 'count' (integer values of
-        records/entries) for each category, min and max integer values
-        (for the range), and another data dictionary, which contains
-        a dictionary with the string type name of characteristics
-        as keys and the frequency in which they repeat within the category
-        as integer values.
+        keys: salary categories (strings)
+        values: dictionary
+            keys: count, min, max, data (strings)
+            values: count, min, and max are positive integers (including
+            zero), data is a dictionary
+                keys: survey answers (strings)
+                values: positive integers (including zero)
     """
 ```
 Similar to categorize_data(), to create this method we need to use an accumulation pattern and do the following:
@@ -113,22 +108,17 @@ Similar to categorize_data(), to create this method we need to use an accumulati
 def top_five(cls, count_dict):
     """
     This method sorts through the dictionary returned from
-            count_data() and determines the top five features with
-            the highest frequency on each salary category.
-
-            category_dict: the dictionary returned from count_data()
-
-            Returns: dictionary
-                keys: salary category (string)
-                values: dictionary
-                    keys: 'data' (string)
-                        values: dictionary
-                        keys:   count (string)
-                                min (string)
-                                max (string)
-                                data (dictionary)
-                                    keys: feature (string)
-                                    values: frequency (integer)
+    count_data() and determines the top five features with
+    the highest frequency in each salary category.
+    count_dict: the dictionary returned from count_data()
+    Returns: dictionary
+        keys: salary category (strings)
+        values: dictionary
+            keys: count, min, max, data (strings)
+            values: count, min, and max are positive integers
+            (including zero), data is a dictionary
+                keys: features (strings)
+                values: frequency (positive integers including zero)
     """
 ```
 For this method, we start by copying the existing **count_dict** parameter in a new placeholder
@@ -144,7 +134,6 @@ and add that new field to the data from within the category the outerloop is in.
 outer loop which iterates through every category within the **count_dict** is done, the method simply
 returns the local variable **top_five**
 
-<<<<<<< HEAD
 
 ### Method: plot_data(): (Carlos Sandoval)
 ```
@@ -152,7 +141,8 @@ returns the local variable **top_five**
 def plot_data(cls, top_five_dict):
     """
     This method requires the plotly library
-    This method sorts through the dictionary returned from top_five() and plots the occurrence of answers for each salary category
+    This method sorts through the dictionary returned from top_five() and
+    plots the occurrence of answers for each salary category
     top_five_dict: the dictionary returned from top_five()
     Returns: three plots that display the results of top_five_dict
     """
@@ -166,64 +156,3 @@ for each category. Then, we store field name and frequency for each field into t
 lists. Then using the methods provided by the `plotly` library, we create a new figure, using the **Figure()**
 function, passing in the **labels** and **percentages**  lists, and update the layout using the **update_layout()**
 method, and finally the **show()** method to render the data in a browser window.
-=======
-### Method: top_five():
-```
-@classmethod
-def top_five(cls, count_dict):
-    """
-    This method sorts through the dictionary returned from
-            count_data() and determines the top five features with 
-            the highest frequency on each salary category.
-
-            category_dict: the dictionary returned from count_data()
-
-            Returns: dictionary
-                keys: salary category (string)
-                values: dictionary
-                    keys: 'data' (string)
-                        values: dictionary
-                        keys:   count (string)
-                                min (string)
-                                max (string)
-                                data (dictionary)
-                                    keys: feature (string)
-                                    values: frequency (integer)
-    """
-```
-For this method, we start by copying the existing **count_dict** parameter in a new placeholder
-local variable **top_five** which is intended to be returned after the data is prossesed.
-
-* we iterate through the categories within **count_dict** and store the dictionaryb of features
-on a new variable **category_data**, then with help of the **sorted** funciton we pass the 
-variable with a lambda function that turns the sorting key from being the standard key to be the 
-value, returning a list of tuples containing the dictionary key, and values in orderm, whithin the 
-same line we iterate though the list and with the help of a `for ... in ...` loop we create a 
-variable called tiple_field. from there, we extract **name** and **value** from the **tuple_field**
-and add that new field to the data from within the category the outerloop is in. Finally, once the 
-outer loop which iterates through every category within the **count_dict** is done, the method simply
-returns the local variable **top_five**
-
-
-### Method: plot_data():
-```
-@classmethod
-def plot_data(cls, top_five_dict):
-        """
-        This method requires the plotly library
-        This method sorts through the dictionary returned from top_five() and
-        plots the occurrance of answers for each salary category
-        top_five_dict: the dictionary returned from top_five()
-        Returns: three plots that display the results of top_five_dict
-        """
-```
-For this method, we start by copying the existing **count_dict** parameter in a new placeholder
-local variable **top_five** which is intended to be returned after the data is prossesed.
-
-* For this method, we start by iterating through the categories within **top_five_dict** and 
-create two local variables for the `for...in..` loop we use, called **labels** and **percentages**
-for each category. Then, we store field name and frequency for each field into the two variables **label** and **percentage** and after initializing them, and formating we append them to the **labels** and **percentages** 
-lists. Then using the methods provided by the `plotly` library, we create a new figure, using the **Figure()**
-function, passing in the **labels** and **percentages**  lists, and update the layout using the **update_layout()**
-method, and finally the **show()** method to render the data in a browser window.
->>>>>>> 4d4a01bfdf44f8f6513b9f577d6ccbe454ec3a76

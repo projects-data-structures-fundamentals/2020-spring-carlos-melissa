@@ -53,7 +53,6 @@ To create this method, we will need to use the accumulation pattern and do the f
 * Open filename in read mode as **file_ref**
 * For each line after the first line:
 
-    * Define and initialize an empty dictionary named **temp_frequency_holder_dic**. This dictionary will be used to temporarily store the frequency of values during the iterations.
     * Strip the line, and split it by the character "|".
     * Define and initialize the variable **field_salary**, which will be the salary value accessed through salary index
     * Use a nested conditional to check the following:
@@ -90,14 +89,15 @@ Similar to categorize_data(), to create this method we need to use an accumulati
 
 * Define and initialize two placeholder variables: **category_dict** and **category_data_list**. category_dict will contain all the info from the salary_category of that iteration, or `category_dict = categorized_data[category_name]`. category_data_list contains just the dictionary paired with the data key in category_dict.
 * Assign the length of category_data_list to the count key in frequency data
+* Define and initialize the variable **category_data**, and assign it to `frequency_data[category_name]['data']`. This is purely to shorten the code within the `for` loops below, since accessing the data key requires a lot of characters.
 * Iterate through category_data_list with the loop variable **records**, then iterate through enumerate(records) with the following line: `for column_index, field in enumerate(records):` This line allows us to access the index as well as the actual field in records while iterating.
 * Using an `if` statement, check if column_index is not 0, 4, 6, 7, or 10. We ignore the values at these indices since they contain irrelevant information, such as respondent id and age.
 * If the column_index is not any of those indices, the following conditional occurs:
     * If the field contains ';', split the field by ';' and assign the new list to **values**. This split will parse the LanguageWorkedWith column.
         * Iterate through values with the loop variable **value**.
-        * if value is not already a key in the dictionary paired with `frequency_data[category_name]['data']`, make it a key and assign it to the integer 0.
+        * if value is not already a key in category_data, make it a key and assign it to the integer 0.
         * If value is already a key, increment it's value by 1
-    * Else, if field is not already a key in the dictionary paired with `frequency_data[category_name]['data']`, make it a key and assign it to the integer 0.
+    * Else, if field is not already a key in category_data, make it a key and assign it to the integer 0.
     * If field is already a key, increment it's value by 1.
 
 * After all the iterations complete, return frequency_data

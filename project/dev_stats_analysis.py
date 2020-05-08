@@ -41,27 +41,24 @@ class DeveloperStats():
         """
 
         categorized_data = {
-          'low_salary': { 'min': 0, 'max': 50000, 'data': []},
-          'medium_salary': { 'min': 50001, 'max': 80000, 'data': []},
-          'high_salary':  { 'min': 80001, 'max': 200000, 'data': []}
+            'low_salary': {'min': 0, 'max': 50000, 'data': []},
+            'medium_salary': {'min': 50001, 'max': 80000, 'data': []},
+            'high_salary':  {'min': 80001, 'max': 200000, 'data': []}
         }
-        #creating a list of the column names and finding index for salary column
+
         data_columns = cls.get_column_names(filename)
         salary_index = (data_columns.index('ConvertedSalary'))
 
         with open(filename, 'r') as file_ref:
 
-            #temporal dict to store frequency of values
-            temp_frequency_holder_dic = {}
-
             for line in file_ref.readlines()[1:]:
 
                 record = line.strip().split('|')
 
-                #taking value from the salary field
+                # taking value from the salary field
                 field_salary = float(record[salary_index])
 
-                #categorizing record according to the salary range
+                # categorizing record according to the salary range
 
                 if field_salary <= 50000:
                     categorized_data['low_salary']['data'].append(record)
@@ -92,48 +89,38 @@ class DeveloperStats():
         """
 
         frequency_data = {
-            'low_salary': {'count': 0, 'min': 0, 'max': 50000, 'data': {}},
-            'medium_salary': {'count': 0, 'min': 50001, 'max': 80000, 'data': {}},
-            'high_salary':  {'count': 0, 'min': 80001, 'max': 200000, 'data': {}}
+            'low_salary': {
+                'count': 0, 'min': 0, 'max': 50000, 'data': {}
+            },
+            'medium_salary': {
+                'count': 0, 'min': 50001, 'max': 80000, 'data': {}
+            },
+            'high_salary':  {
+                'count': 0, 'min': 80001, 'max': 200000, 'data': {}
+            }
         }
 
-        #iterating though the categories in data
         for category_name in categorized_data:
+            category_dict = categorized_data[category_name]
+            category_data_list = category_dict['data']
+            frequency_data[category_name]['count'] = len(category_data_list)
+            category_data = frequency_data[category_name]['data']
 
-          #creating placeholder variables
-          category_dict = categorized_data[category_name]
-          category_data_list = category_dict['data']
-
-          #updating count according to number of records/entries in category data
-          frequency_data[category_name]['count'] = len(category_data_list)
-
-          #iterating though records/entries in the current category data
-          for records in category_data_list:
-
-            #iterating though the fields of those records
-            for column_index, field in enumerate(records):
-
-              #ignore the following columns
-              if column_index not in [0, 4, 6, 7, 10]: # add any column to be ignore here (NOTE: I'm ignoring programing language for now)
-
-                #check whether if field contains multiple values
-                if ';' in field:
-                  values = field.split(';')
-
-                  for value in values:
-
-                    if value not in frequency_data[category_name]['data']:
-                      frequency_data[category_name]['data'][value] = 0
-                    frequency_data[category_name]['data'][value] += 1
-                else:
-                  #append on this way this if field doesn't contain multiple value
-                  #inserting new fields into the corresponging 'data' dictionary in category if it doesnt' exit, and increment
-                  if field not in frequency_data[category_name]['data']:
-                    frequency_data[category_name]['data'][field] = 0
-                  frequency_data[category_name]['data'][field] += 1
+            for records in category_data_list:
+                for column_index, field in enumerate(records):
+                    if column_index not in [0, 4, 6, 7, 10]:
+                        if ';' in field:
+                            values = field.split(';')
+                            for value in values:
+                                if value not in category_data:
+                                    category_data[value] = 0
+                                category_data[value] += 1
+                        else:
+                            if field not in category_data:
+                                category_data[field] = 0
+                            category_data[field] += 1
 
         return frequency_data
-
 
     @classmethod
     def top_five(cls, count_dict):
@@ -151,22 +138,20 @@ class DeveloperStats():
                     keys: features (strings)
                     values: frequency (positive integers including zero)
         """
-        #shallow copy
         top_five = count_dict.copy()
 
-        #iterating though the categories
         for category_name in count_dict:
+            category_data = count_dict[category_name]['data']
+            top_five[category_name]['data'] = {}
 
-          #place holder variable and cleaning top_five category data
-          category_data = count_dict[category_name]['data']
-          top_five[category_name]['data'] = {}
-
-          #iterates though the list of tuples resurt of the sorted function
-          #that uses lambda to sort list by items, intead of keys
-          for tuple_field in sorted(category_data.items(), key=lambda tuple_item: tuple_item[1])[-5:]:
-            field, value = tuple_field
-            #assigning top sorted features to data fields
-            top_five[category_name]['data'][field] = value
+            # iterates though the list of tuples resurt of the sorted function
+            # that uses lambda to sort list by items, intead of keys
+            for tuple_field in sorted(
+                    category_data.items(), key=lambda tuple_item: tuple_item[1]
+            )[-5:]:
+                field, value = tuple_field
+                # assigning top sorted features to data fields
+                top_five[category_name]['data'][field] = value
 
         return top_five
 
@@ -179,37 +164,42 @@ class DeveloperStats():
         top_five_dict: the dictionary returned from top_five()
         Returns: three plots that display the results of top_five_dict
         """
-        #iterates through categories
         for salary_category in top_five_dict:
-          #create labels and percentages for category
-          labels = []
-          percentages = []
+            labels = []
+            percentages = []
 
-          for field_name in top_five_dict[salary_category]['data']:
+            for field_name in top_five_dict[salary_category]['data']:
 
-            #get field name and frequency for each field
-            field_frequency = top_five_dict[salary_category]['data'][field_name]
-            total_frequency = top_five_dict[salary_category]['count']
+                # get field name and frequency for each field
+                field_frequency = (
+                    top_five_dict[salary_category]['data'][field_name]
+                )
+                total_frequency = top_five_dict[salary_category]['count']
 
-            #calculate percentage
-            percentage = int((field_frequency / total_frequency) * 100)
-            percentages.append(percentage)
+                # calculate percentage
+                percentage = int((field_frequency / total_frequency) * 100)
+                percentages.append(percentage)
 
-            #create and format labels
-            label = field_name
-            if label == 'Computer science, computer engineering, or software engineering':
-                label = label[:16]
-            labels.append(label + " " + str(percentage) + "%")
+                # create and format labels
+                label = field_name
+                if label == ('Computer science, computer engineering, '
+                             'or software engineering'
+                             ):
+                    label = label[:16]
+                labels.append(label + " " + str(percentage) + "%")
 
-          #displaying data
-          fig = go.Figure([go.Bar(x=labels, y=percentages)])
-          #fig.update_xaxes(tickangle=10)
-          fig.update_layout(
-              title = (str(salary_category).replace('_', ' ') + " - top five occurring features"),
-              xaxis_title = "Features",
-              yaxis_title = "Percentages"
-          )
-          fig.show()
+            # displaying data
+            fig = go.Figure([go.Bar(x=labels, y=percentages)])
+            # fig.update_xaxes(tickangle=10)
+            fig.update_layout(
+                title=(
+                    str(salary_category).replace('_', ' ') +
+                    " - top five occurring features"
+                ),
+                xaxis_title="Features",
+                yaxis_title="Percentages"
+            )
+            fig.show()
 
 
 def main():
@@ -235,6 +225,8 @@ def main():
     print('\n')
 
     plot = develop.plot_data(top_five_dict)
+    print(f' Creating charts: {plot}')
+
 
 if __name__ == '__main__':
     main()

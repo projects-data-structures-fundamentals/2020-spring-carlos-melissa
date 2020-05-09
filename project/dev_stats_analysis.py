@@ -46,7 +46,6 @@ class DeveloperStats():
             'high_salary':  {'min': 80001, 'max': 200000, 'data': []}
         }
 
-        data_columns = cls.get_column_names(filename)
         salary_index = 4 # index of ConvertedSalary
 
         with open(filename, 'r') as file_ref:
@@ -100,24 +99,28 @@ class DeveloperStats():
         }
 
         for category_name in categorized_data:
+            
             category_dict = categorized_data[category_name]
             category_data_list = category_dict['data']
             frequency_data[category_name]['count'] = len(category_data_list)
             category_data = frequency_data[category_name]['data']
 
             for records in category_data_list:
+
                 for column_index, field in enumerate(records):
-                    if column_index not in [0, 4, 6, 7, 10]:
-                        if ';' in field:
-                            values = field.split(';')
-                            for value in values:
-                                if value not in category_data:
-                                    category_data[value] = 0
-                                category_data[value] += 1
-                        else:
-                            if field not in category_data:
-                                category_data[field] = 0
-                            category_data[field] += 1
+
+                    if column_index not in [0, 4, 6, 7, 10] and ';' in field:
+                        values = field.split(';')
+                        for value in values:
+                            if value not in category_data:
+                                category_data[value] = 0
+                            category_data[value] += 1
+
+                    elif column_index not in [0, 4, 6, 7, 10]:
+
+                        if field not in category_data:
+                            category_data[field] = 0
+                        category_data[field] += 1
 
         return frequency_data
 
@@ -208,23 +211,23 @@ def main():
     develop = DeveloperStats()
     filename = 'stats.csv'
     result = develop.get_column_names(filename)
-    # print(f' column names in {filename} are: {result}')
-    # print("\n")
+    print(f' column names in {filename} are: {result}')
+    print("\n")
 
     category_dict = develop.categorize_data(filename)
-    # print(f' categorized data in {filename} is: {category_dict}')
-    # print("\n")
+    print(f' categorized data in {filename} is: {category_dict}')
+    print("\n")
 
     count_dict = develop.count_data(category_dict)
-    # print(f' counted categories in {filename} are: {count_dict}')
-    # print("\n")
+    print(f' counted categories in {filename} are: {count_dict}')
+    print("\n")
 
     top_five_dict = develop.top_five(count_dict)
     print(f' the top five occurring features are {top_five_dict}')
     print('\n')
 
-    # plot = develop.plot_data(top_five_dict)
-    # print(f' Creating charts: {plot}')
+    plot = develop.plot_data(top_five_dict)
+    print(f' Creating charts: {plot}')
 
 
 if __name__ == '__main__':

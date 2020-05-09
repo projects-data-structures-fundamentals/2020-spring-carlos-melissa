@@ -46,9 +46,15 @@ class DeveloperStats():
             'high_salary':  {'min': 80001, 'max': 200000, 'data': []}
         }
 
-        salary_index = 4 # index of ConvertedSalary
-
         with open(filename, 'r') as file_ref:
+
+            empty_check = file_ref.read(1)
+            if empty_check: # if the file isn't empty
+                data_columns = cls.get_column_names(filename)
+                salary_index = (data_columns.index('ConvertedSalary'))
+
+            else: # if the file is empty
+                salary_index = 4 # index of ConvertedSalary
 
             for line in file_ref.readlines()[1:]:
 

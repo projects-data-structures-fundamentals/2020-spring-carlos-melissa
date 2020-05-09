@@ -45,12 +45,12 @@ To create this method, we will need to use the accumulation pattern and do the f
 * Define and initialize **categorized_data**, which is a dictionary containing the following information:
     * Three keys: **low_salary**, **medium_salary**, and **high_salary**. Each key will have a dictionary value, where the keys will be **min**, **max**, and **data**. Min is the minimum salary for that category, max is the maximum salary for that category, and data is a list which will contain a list of the survey responses.
     * The salary ranges are: low_salary: 0 - 50000, medium_salary: 50001 - 80000, high_salary: 80001 - 200000.
-* Access the output from get_column_names() with the line `cls.get_column_names(filename)`. Assign this output to the variable **data_columns**
-
-* Using data columns and the index method, find the index of the ConvertedSalary column, and assign that index to the variable **salary_index**
 
 #### Working with filename:
 * Open filename in read mode as **file_ref**
+* Check if filename is empty. To do this, read the first character of filename, and assign it to **empty_check**
+    * if the file is not empty (`if empty_check:`), access the output from get_column_names() with the line `cls.get_column_names(filename)`. Assign this output to the variable **data_columns**. Using data columns and the index method, find the index of the ConvertedSalary column, and assign that index to the variable **salary_index**
+    * if the file is empty, assign salary_index to 4
 * For each line after the first line:
 
     * Strip the line, and split it by the character "|".

@@ -18,7 +18,7 @@ class DeveloperStats():
         This method sorts through the first line of the CSV file provided
         from filename and parses the column names into a list
         filename: name of a CSV file (string)
-        returns: list of the names of the columns (strings)
+        returns: list containing the names of the columns (strings)
         """
         with open(filename, 'r') as file_ref:
             return file_ref.readline().strip().split('|')
@@ -29,7 +29,7 @@ class DeveloperStats():
         This method sorts through the CSV file provided from filename and sorts
         the responses into three categories based on their salary values:
         low_salary, medium_salary,and high_salary. Each category has min and
-        max keys for the salary range as well as a data key. Data is a nested
+        max keys for the salary ranges as well as a data key. Data is a nested
         list of survey responses for each salary category.
         filename: name of a CSV file (string)
         returns: dictionary
@@ -72,7 +72,7 @@ class DeveloperStats():
     @classmethod
     def count_data(cls, categorized_data):
         """
-        This method sorts though the 'data' field in categorize_data, which is
+        This method sorts though the 'data' field in categorized_data, which is
         the dictionary returned from categorize_data(), and counts the
         frequency in which specific answers appear within the salary category.
         categorized_data: dictionary returned from categorize_data()
@@ -99,15 +99,15 @@ class DeveloperStats():
         }
 
         for category_name in categorized_data:
-            
+
             category_dict = categorized_data[category_name]
             category_data_list = category_dict['data']
             frequency_data[category_name]['count'] = len(category_data_list)
             category_data = frequency_data[category_name]['data']
 
-            for records in category_data_list:
+            for record in category_data_list:
 
-                for column_index, field in enumerate(records):
+                for column_index, field in enumerate(record):
 
                     if column_index not in [0, 4, 6, 7, 10] and ';' in field:
                         values = field.split(';')
@@ -128,7 +128,7 @@ class DeveloperStats():
     def top_five(cls, count_dict):
         """
         This method sorts through the dictionary returned from
-        count_data() and determines the top five features with
+        count_data() and determines the top five answers with
         the highest frequency in each salary category.
         count_dict: the dictionary returned from count_data()
         Returns: dictionary

@@ -18,7 +18,7 @@ def get_column_names(cls, filename):
     This method sorts through the first line of the CSV file provided
     from filename and parses the column names into a list
     filename: name of a CSV file (string)
-    returns: list of the names of the columns (strings)
+    returns: list containing the names of the columns (strings)
     """
 ```
 This method should only require two lines of code:
@@ -30,7 +30,7 @@ This method should only require two lines of code:
 @classmethod
 def categorize_data(cls, filename):
     """
-    This method sorts through the CSV file provided from filename and sorts the responses into three categories based on their salary values: low_salary, medium_salary, and high_salary. Each category has min and max keys for the salary range as well as a data key. Data is a nested
+    This method sorts through the CSV file provided from filename and sorts the responses into three categories based on their salary values: low_salary, medium_salary, and high_salary. Each category has min and max keys for the salary ranges as well as a data key. Data is a nested
     list of survey responses for each salary category.
     filename: name of a CSV file (string)
     returns: dictionary
@@ -68,7 +68,7 @@ To create this method, we will need to use the accumulation pattern and do the f
 @classmethod
 def count_data(cls, categorized_data):
     """
-    This method sorts though the 'data' field in categorize_data, which is the dictionary returned from categorize_data(), and counts the frequency in which specific answers appear within the salary category.
+    This method sorts though the 'data' field in categorized_data, which is the dictionary returned from categorize_data(), and counts the frequency in which specific answers appear within the salary category.
     categorized_data: dictionary returned from categorize_data()
     Returns: dictionary
         keys: salary categories (strings)
@@ -90,14 +90,14 @@ Similar to categorize_data(), to create this method we need to use an accumulati
 * Define and initialize two placeholder variables: **category_dict** and **category_data_list**. category_dict will contain all the info from the salary_category of that iteration, or `category_dict = categorized_data[category_name]`. category_data_list contains just the dictionary paired with the data key in category_dict.
 * Assign the length of category_data_list to the count key in frequency data
 * Define and initialize the variable **category_data**, and assign it to `frequency_data[category_name]['data']`. This is purely to shorten the code within the `for` loops below, since accessing the data key requires a lot of characters.
-* Iterate through category_data_list with the loop variable **records**, then iterate through enumerate(records) with the following line: `for column_index, field in enumerate(records):` This line allows us to access the index as well as the actual field in records while iterating.
-* Using an `if` statement, check if column_index is not 0, 4, 6, 7, or 10. We ignore the values at these indices since they contain irrelevant information, such as respondent id and age.
-* If the column_index is not any of those indices, the following conditional occurs:
-    * If the field contains ';', split the field by ';' and assign the new list to **values**. This split will parse the LanguageWorkedWith column.
+* Iterate through category_data_list with the loop variable **record**, then iterate through enumerate(record) with the following line: `for column_index, field in enumerate(records):` This line allows us to access the index as well as the actual field in record while iterating.
+* Using an `if` statement, check if column_index is not 0, 4, 6, 7, or 10. We ignore the values at these indices since they contain irrelevant information, such as respondent id and age. Within this same if statement, check if ';' is in the field. If ';' is in the field, the data is from the LanguageWorkedWith column and needs to be parsed.
+    * If this condition is met, split the field by ';' and assign the new list to **values**. This split will parse the LanguageWorkedWith column.
         * Iterate through values with the loop variable **value**.
         * if value is not already a key in category_data, make it a key and assign it to the integer 0.
         * If value is already a key, increment it's value by 1
-    * Else, if field is not already a key in category_data, make it a key and assign it to the integer 0.
+* Else, check if the column index is not 0, 4, 6, 7, or 10 (without the ';' character).
+    * If this condition is met, if field is not already a key in category_data, make it a key and assign it to the integer 0.
     * If field is already a key, increment it's value by 1.
 
 * After all the iterations complete, return frequency_data
@@ -108,7 +108,7 @@ Similar to categorize_data(), to create this method we need to use an accumulati
 def top_five(cls, count_dict):
     """
     This method sorts through the dictionary returned from
-    count_data() and determines the top five features with
+    count_data() and determines the top five answers with
     the highest frequency in each salary category.
     count_dict: the dictionary returned from count_data()
     Returns: dictionary

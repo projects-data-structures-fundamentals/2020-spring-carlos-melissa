@@ -70,7 +70,7 @@ class TestTopFive(unittest.TestCase):
             'high_salary':
             {
                 'count': 5, 'min': 80001, 'max': 200000, 'data': {
-                    'Masterâ€™s degree (MA, MS, M.Eng., MBA, etc.)': 3, 'C#': 3,
+                    'Master’s degree (MA, MS, M.Eng., MBA, etc.)': 3, 'C#': 3,
                     'HTML': 3, 'Python': 3, 'JavaScript': 4
                 }
             }

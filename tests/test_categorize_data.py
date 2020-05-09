@@ -69,7 +69,7 @@ class TestCategorizeData(unittest.TestCase):
                         'Computer science, computer engineering, or software engineering',
                         '94455.0', '3 - 4 times per week', 'Male',
                         'White or of European descent',
-                        'Masterâ€™s degree (MA, MS, M.Eng., MBA, etc.)',
+                        'Master’s degree (MA, MS, M.Eng., MBA, etc.)',
                         '3 - 4 hours', '35 - 44 years old', 'Between 1 and 2 years ago',
                         'C;C#;Java;JavaScript;Objective-C;PHP;Swift;HTML;CSS'
                     ],
@@ -146,7 +146,7 @@ class TestCategorizeData(unittest.TestCase):
                         '51900', 'United Kingdom', 'Moderately satisfied',
                         'Computer science, computer engineering, or software engineering',
                         '94455.0', '3 - 4 times per week', 'Male', 'White or of European descent',
-                        'Masterâ€™s degree (MA, MS, M.Eng., MBA, etc.)', '3 - 4 hours',
+                        'Master’s degree (MA, MS, M.Eng., MBA, etc.)', '3 - 4 hours',
                         '35 - 44 years old', 'Between 1 and 2 years ago',
                         'C;C#;Java;JavaScript;Objective-C;PHP;Swift;HTML;CSS'
                     ],
@@ -164,7 +164,7 @@ class TestCategorizeData(unittest.TestCase):
                         'A social science (ex. anthropology, psychology, political science)',
                         '175000.0', '1 - 2 times per week', 'Male',
                         'White or of European descent',
-                        'Bachelorâ€™s degree (BA, BS, B.Eng., etc.)',
+                        'Bachelor’s degree (BA, BS, B.Eng., etc.)',
                         'Less than 30 minutes', '45 - 54 years old',
                         'Between 1 and 2 years ago', 'JavaScript;Python'
                     ],
@@ -173,7 +173,7 @@ class TestCategorizeData(unittest.TestCase):
                         'A humanities discipline (ex. literature, history, philosophy)',
                         '90288.0', "I don't typically exercise", 'Male',
                         'White or of European descent',
-                        'Masterâ€™s degree (MA, MS, M.Eng., MBA, etc.)',
+                        'Master’s degree (MA, MS, M.Eng., MBA, etc.)',
                         '30 - 59 minutes', '25 - 34 years old',
                         'Less than a year ago', 'C#;Go;JavaScript;Ruby;HTML;CSS'
                     ],
@@ -182,7 +182,7 @@ class TestCategorizeData(unittest.TestCase):
                         'Computer science, computer engineering, or software engineering',
                         '82000.0', '1 - 2 times per week', 'Male',
                         'White or of European descent',
-                        'Masterâ€™s degree (MA, MS, M.Eng., MBA, etc.)',
+                        'Master’s degree (MA, MS, M.Eng., MBA, etc.)',
                         '30 - 59 minutes', '25 - 34 years old',
                         'Less than a year ago', 'Java;Python;SQL'
                     ]

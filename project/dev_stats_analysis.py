@@ -47,7 +47,7 @@ class DeveloperStats():
         }
 
         data_columns = cls.get_column_names(filename)
-        salary_index = (data_columns.index('ConvertedSalary'))
+        salary_index = 4 # index of ConvertedSalary
 
         with open(filename, 'r') as file_ref:
 
@@ -59,7 +59,6 @@ class DeveloperStats():
                 field_salary = float(record[salary_index])
 
                 # categorizing record according to the salary range
-
                 if field_salary <= 50000:
                     categorized_data['low_salary']['data'].append(record)
 
@@ -209,23 +208,23 @@ def main():
     develop = DeveloperStats()
     filename = 'stats.csv'
     result = develop.get_column_names(filename)
-    print(f' column names in {filename} are: {result}')
-    print("\n")
+    # print(f' column names in {filename} are: {result}')
+    # print("\n")
 
     category_dict = develop.categorize_data(filename)
-    print(f' categorized data in {filename} is: {category_dict}')
-    print("\n")
+    # print(f' categorized data in {filename} is: {category_dict}')
+    # print("\n")
 
     count_dict = develop.count_data(category_dict)
-    print(f' counted categories in {filename} are: {count_dict}')
-    print("\n")
+    # print(f' counted categories in {filename} are: {count_dict}')
+    # print("\n")
 
     top_five_dict = develop.top_five(count_dict)
     print(f' the top five occurring features are {top_five_dict}')
     print('\n')
 
-    plot = develop.plot_data(top_five_dict)
-    print(f' Creating charts: {plot}')
+    # plot = develop.plot_data(top_five_dict)
+    # print(f' Creating charts: {plot}')
 
 
 if __name__ == '__main__':

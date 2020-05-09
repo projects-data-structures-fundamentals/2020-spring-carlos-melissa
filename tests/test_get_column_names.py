@@ -23,9 +23,9 @@ class TestGetColumnNames(unittest.TestCase):
         """
         Test case for testing empty csv file header or empty csv file
         """
-        input = 'getColumnNames1.csv'
+        file_input = 'getColumnNames1.csv'
 
-        actual_result = self.dev_stats.get_column_names(input)
+        actual_result = self.dev_stats.get_column_names(file_input)
         expected_result = ['']
         self.assertEqual(actual_result, expected_result)
 
@@ -33,9 +33,9 @@ class TestGetColumnNames(unittest.TestCase):
         """
         Test case for a csv file header with 3 columns
         """
-        input = 'getColumnNames2.csv'
+        file_input = 'getColumnNames2.csv'
 
-        actual_result = self.dev_stats.get_column_names(input)
+        actual_result = self.dev_stats.get_column_names(file_input)
         expected_result = ['Respondent', 'Country', 'JobSatisfaction']
         self.assertEqual(actual_result, expected_result)
 
@@ -43,11 +43,15 @@ class TestGetColumnNames(unittest.TestCase):
         """
         Test case for a csv file header columns
         """
-        input = 'stats.csv'
+        file_input = 'stats.csv'
 
-        actual_result = self.dev_stats.get_column_names(input)
-        expected_result = ['Respondent', 'Country', 'JobSatisfaction', 'UndergradMajor', 'ConvertedSalary', 'Exercise',
-                           'Gender', 'RaceEthnicity', 'EducationParents', 'HoursOutside', 'Age', 'LastNewJob', 'LanguageWorkedWith']
+        actual_result = self.dev_stats.get_column_names(file_input)
+        expected_result = [
+            'Respondent', 'Country', 'JobSatisfaction', 'UndergradMajor',
+            'ConvertedSalary', 'Exercise', 'Gender', 'RaceEthnicity',
+            'EducationParents', 'HoursOutside', 'Age', 'LastNewJob',
+            'LanguageWorkedWith'
+        ]
         self.assertEqual(actual_result, expected_result)
 
 

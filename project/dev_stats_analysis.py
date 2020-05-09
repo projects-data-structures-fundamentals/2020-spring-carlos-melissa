@@ -49,6 +49,7 @@ class DeveloperStats():
         with open(filename, 'r') as file_ref:
 
             empty_check = file_ref.read(1)
+
             if empty_check: # if the file isn't empty
                 data_columns = cls.get_column_names(filename)
                 salary_index = (data_columns.index('ConvertedSalary'))
@@ -59,11 +60,8 @@ class DeveloperStats():
             for line in file_ref.readlines()[1:]:
 
                 record = line.strip().split('|')
-
-                # taking value from the salary field
                 field_salary = float(record[salary_index])
 
-                # categorizing record according to the salary range
                 if field_salary <= 50000:
                     categorized_data['low_salary']['data'].append(record)
 
@@ -106,8 +104,10 @@ class DeveloperStats():
 
         for category_name in categorized_data:
 
+            # Accesses the nested list associated with the salary category
             category_dict = categorized_data[category_name]
             category_data_list = category_dict['data']
+            # count of the responses in the category
             frequency_data[category_name]['count'] = len(category_data_list)
             category_data = frequency_data[category_name]['data']
 
@@ -116,6 +116,7 @@ class DeveloperStats():
                 for column_index, field in enumerate(record):
 
                     if column_index not in [0, 4, 6, 7, 10] and ';' in field:
+                        # parses LanguageWorkedWith column
                         values = field.split(';')
                         for value in values:
                             if value not in category_data:

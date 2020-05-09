@@ -10,7 +10,7 @@ import plotly.graph_objects as go
 class DeveloperStats():
     """
     Reads information from a CSV file, categorizes the data by salary, counts
-    the occurrence of features, and plots the results
+    the occurrence of answers, and plots the results
     """
     @classmethod
     def get_column_names(cls, filename):

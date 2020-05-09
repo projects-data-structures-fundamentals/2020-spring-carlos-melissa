@@ -6,7 +6,7 @@ Carlos Sandoval & Melissa Mullen
 class DeveloperStats():
     """
     Reads information from a CSV file, categorizes the data by salary, counts
-    the occurrence of features, and plots the results
+    the occurrence of answers, and plots the results
     """
 ```
 
@@ -22,8 +22,8 @@ def get_column_names(cls, filename):
     """
 ```
 This method should only require two lines of code:
-* open filename in read mode
-* strip the first line of the file, separate it by the character "|", and return the newly formed list
+* open filename in read mode.
+* strip the first line of the file, separate it by the character "|", and return the newly formed list.
 
 ### Method: categorize_data(): (Melissa Mullen)
 ```
@@ -48,19 +48,20 @@ To create this method, we will need to use the accumulation pattern and do the f
 
 #### Working with filename:
 * Open filename in read mode as **file_ref**
-* Check if filename is empty. To do this, read the first character of filename, and assign it to **empty_check**
-    * if the file is not empty (`if empty_check:`), access the output from get_column_names() with the line `cls.get_column_names(filename)`. Assign this output to the variable **data_columns**. Using data columns and the index method, find the index of the ConvertedSalary column, and assign that index to the variable **salary_index**
-    * if the file is empty, assign salary_index to 4
-* For each line after the first line:
+* Check if filename is empty. To do this, read the first character of filename, and assign it to **empty_check**.
+    * if the file is not empty (`if empty_check:`), access the output from get_column_names() with the line `cls.get_column_names(filename)`. Assign this output to the variable **data_columns**. Using data columns and the index method, find the index of the ConvertedSalary column, and assign that index to the variable **salary_index**.
+    * if the file is empty, assign salary_index to 4.
 
-    * Strip the line, and split it by the character "|".
-    * Define and initialize the variable **field_salary**, which will be the salary value accessed through salary index
+* For each line after the first line:
+    * Strip the line, and split it by the character "|". Assign this newly formed list to the variable **record**.
+    * Define and initialize the variable **field_salary**, which will be the float type salary value accessed through salary index.
     * Use a nested conditional to check the following:
-        * `if` field_salary is less than or equal to 50000, append the line to the list paired with the data key within the low_salary key of the categorized_data dictionary. AKA, `categorized_data['low_salary']['data'].append()`
-        * `elif` the field_salary is less than or equal to 80000, append the line to the list paired with the data key within the medium_salary key of the categorized_data dictionary. AKA, `categorized_data['medium_salary']['data'].append()`
+        * `if` field_salary is less than or equal to 50000, append the line to the list paired with the data key within the low_salary key of the categorized_data dictionary. AKA, `categorized_data['low_salary']['data'].append()`.
+        * `elif` the field_salary is less than or equal to 80000, append the line to the list paired with the data key within the medium_salary key of the categorized_data dictionary. AKA, `categorized_data['medium_salary']['data'].append()`.
         * `else`, append the line to the list paired with the data key within the medium salary key of the categorize_data dictionary. AKA,    
-        `categorized_data['high_salary']['data'].append()`
-* After the iteration terminates, return categorized data
+        `categorized_data['high_salary']['data'].append()`.
+
+* After the iteration terminates, return categorized data.
 
 
 ### Method: count_data(): (Melissa Mullen)
@@ -88,19 +89,19 @@ Similar to categorize_data(), to create this method we need to use an accumulati
 * Use a `for` loop to iterate through categorized_data with the loop variable **category_name**, and do the following:
 
 * Define and initialize two placeholder variables: **category_dict** and **category_data_list**. category_dict will contain all the info from the salary_category of that iteration, or `category_dict = categorized_data[category_name]`. category_data_list contains just the dictionary paired with the data key in category_dict.
-* Assign the length of category_data_list to the count key in frequency data
+* Assign the length of category_data_list to the count key in frequency data.
 * Define and initialize the variable **category_data**, and assign it to `frequency_data[category_name]['data']`. This is purely to shorten the code within the `for` loops below, since accessing the data key requires a lot of characters.
 * Iterate through category_data_list with the loop variable **record**, then iterate through enumerate(record) with the following line: `for column_index, field in enumerate(records):` This line allows us to access the index as well as the actual field in record while iterating.
-* Using an `if` statement, check if column_index is not 0, 4, 6, 7, or 10. We ignore the values at these indices since they contain irrelevant information, such as respondent id and age. Within this same if statement, check if ';' is in the field. If ';' is in the field, the data is from the LanguageWorkedWith column and needs to be parsed.
+* Using an `if` statement, check if column_index is not 0, 4, 6, 7, or 10. We ignore the values at these indices since they contain irrelevant information, such as respondent id and age. Within this same if statement, check if ';' is in the field. If ';' is in the field, the data is from the LanguageWorkedWith column and needs to be parsed. As a whole, the if statement will look like this: `if column_index not in [0, 4, 6, 7, 10] and ';' in field:`.
     * If this condition is met, split the field by ';' and assign the new list to **values**. This split will parse the LanguageWorkedWith column.
         * Iterate through values with the loop variable **value**.
         * if value is not already a key in category_data, make it a key and assign it to the integer 0.
-        * If value is already a key, increment it's value by 1
+        * If value is already a key, increment it's value by 1.
 * Else, check if the column index is not 0, 4, 6, 7, or 10 (without the ';' character).
     * If this condition is met, if field is not already a key in category_data, make it a key and assign it to the integer 0.
     * If field is already a key, increment it's value by 1.
 
-* After all the iterations complete, return frequency_data
+* After all the iterations complete, return frequency_data.
 
 ### Method: top_five(): (Carlos Sandoval)
 ```
@@ -122,15 +123,15 @@ def top_five(cls, count_dict):
     """
 ```
 For this method, we start by copying the existing **count_dict** parameter in a new placeholder
-local variable **top_five** which is intended to be returned after the data is prossesed.
+local variable **top_five** which is intended to be returned after the data is processed.
 
-* we iterate through the categories within **count_dict** and store the dictionaryb of features
-on a new variable **category_data**, then with help of the **sorted** funciton we pass the
+* we iterate through the categories within **count_dict** and store the dictionary of features
+on a new variable **category_data**, then with help of the **sorted** function we pass the
 variable with a lambda function that turns the sorting key from being the standard key to be the
-value, returning a list of tuples containing the dictionary key, and values in orderm, whithin the
+value, returning a list of tuples containing the dictionary key, and values in order, within the
 same line we iterate though the list and with the help of a `for ... in ...` loop we create a
-variable called tiple_field. from there, we extract **name** and **value** from the **tuple_field**
-and add that new field to the data from within the category the outerloop is in. Finally, once the
+variable called tuple_field. from there, we extract **name** and **value** from the **tuple_field**
+and add that new field to the data from within the category the outer loop is in. Finally, once the
 outer loop which iterates through every category within the **count_dict** is done, the method simply
 returns the local variable **top_five**
 
@@ -152,7 +153,7 @@ local variable **top_five** which is intended to be returned after the data is p
 
 * For this method, we start by iterating through the categories within **top_five_dict** and
 create two local variables for the `for...in..` loop we use, called **labels** and **percentages**
-for each category. Then, we store field name and frequency for each field into the two variables **label** and **percentage** and after initializing them, and formating we append them to the **labels** and **percentages**
+for each category. Then, we store field name and frequency for each field into the two variables **label** and **percentage** and after initializing them, and formatting we append them to the **labels** and **percentages**
 lists. Then using the methods provided by the `plotly` library, we create a new figure, using the **Figure()**
 function, passing in the **labels** and **percentages**  lists, and update the layout using the **update_layout()**
 method, and finally the **show()** method to render the data in a browser window.

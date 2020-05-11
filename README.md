@@ -54,11 +54,11 @@ To create this method, we will need to use the accumulation pattern and do the f
 
 * For each line after the first line:
     * Strip the line, and split it by the character "|". Assign this newly formed list to the variable **record**.
-    * Define and initialize the variable **field_salary**, which will be the float type salary value accessed through salary index.
+    * Define and initialize the variable **field_salary**, which will be the float type salary value accessed through salary_index.
     * Use a nested conditional to check the following:
         * `if` field_salary is less than or equal to 50000, append the line to the list paired with the data key within the low_salary key of the categorized_data dictionary. AKA, `categorized_data['low_salary']['data'].append()`.
         * `elif` the field_salary is less than or equal to 80000, append the line to the list paired with the data key within the medium_salary key of the categorized_data dictionary. AKA, `categorized_data['medium_salary']['data'].append()`.
-        * `else`, append the line to the list paired with the data key within the medium salary key of the categorize_data dictionary. AKA,    
+        * `else`, append the line to the list paired with the data key within the high salary key of the categorize_data dictionary. AKA,    
         `categorized_data['high_salary']['data'].append()`.
 
 * After the iteration terminates, return categorized data.
@@ -83,7 +83,7 @@ def count_data(cls, categorized_data):
 ```
 Similar to categorize_data(), to create this method we need to use an accumulation pattern and do the following:
 
-* Define and initialize a dictionary named **frequency_data**. This dictionary contains the same information as categorized_data in categorize_data() when it was first initialized, except it also contains the key 'count' for each salary category. Count will be used to count the number of salary responses in each salary category.
+* Define and initialize a dictionary named **frequency_data**. This dictionary contains the same information as categorized_data in categorize_data() when it was first initialized, except it also contains the key 'count' for each salary category. Count will be used to count the number of salary responses (integers) in each salary category.
 
 #### Iterating through categorize_data
 * Use a `for` loop to iterate through categorized_data with the loop variable **category_name**, and do the following:
@@ -96,10 +96,10 @@ Similar to categorize_data(), to create this method we need to use an accumulati
     * If this condition is met, split the field by ';' and assign the new list to **values**. This split will parse the LanguageWorkedWith column.
         * Iterate through values with the loop variable **value**.
         * if value is not already a key in category_data, make it a key and assign it to the integer 0.
-        * If value is already a key, increment it's value by 1.
+        * If value is already a key, increment its value by 1.
 * Else, check if the column index is not 0, 4, 6, 7, or 10 (without the ';' character).
     * If this condition is met, if field is not already a key in category_data, make it a key and assign it to the integer 0.
-    * If field is already a key, increment it's value by 1.
+    * If field is already a key, increment its value by 1.
 
 * After all the iterations complete, return frequency_data.
 

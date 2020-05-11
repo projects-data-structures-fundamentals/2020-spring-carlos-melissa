@@ -50,12 +50,12 @@ class DeveloperStats():
 
             empty_check = file_ref.read(1)
 
-            if empty_check: # if the file isn't empty
+            if empty_check:  # if the file isn't empty
                 data_columns = cls.get_column_names(filename)
                 salary_index = (data_columns.index('ConvertedSalary'))
 
-            else: # if the file is empty
-                salary_index = 4 # index of ConvertedSalary
+            else:  # if the file is empty
+                salary_index = 4  # index of ConvertedSalary
 
             for line in file_ref.readlines()[1:]:
 
@@ -104,7 +104,7 @@ class DeveloperStats():
 
         for category_name in categorized_data:
 
-            # Accesses the nested list associated with the salary category
+            # Accesses the dictionary associated with the salary category
             category_dict = categorized_data[category_name]
             category_data_list = category_dict['data']
             # count of the responses in the category
@@ -115,8 +115,8 @@ class DeveloperStats():
 
                 for column_index, field in enumerate(record):
 
+                    # parses LanguageWorkedWith column
                     if column_index not in [0, 4, 6, 7, 10] and ';' in field:
-                        # parses LanguageWorkedWith column
                         values = field.split(';')
                         for value in values:
                             if value not in category_data:
@@ -153,8 +153,6 @@ class DeveloperStats():
             category_data = count_dict[category_name]['data']
             top_five[category_name]['data'] = {}
 
-            # iterates though the list of tuples resurt of the sorted function
-            # that uses lambda to sort list by items, intead of keys
             for tuple_field in sorted(
                     category_data.items(), key=lambda tuple_item: tuple_item[1]
             )[-5:]:
@@ -197,9 +195,7 @@ class DeveloperStats():
                     label = label[:16]
                 labels.append(label + " " + str(percentage) + "%")
 
-            # displaying data
             fig = go.Figure([go.Bar(x=labels, y=percentages)])
-            # fig.update_xaxes(tickangle=10)
             fig.update_layout(
                 title=(
                     str(salary_category).replace('_', ' ') +

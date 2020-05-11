@@ -26,7 +26,9 @@ class TestTopFive(unittest.TestCase):
         file_input = 'getColumnNames1.csv'
 
         actual_result = self.dev_stats.top_five(
-            self.dev_stats.count_data(self.dev_stats.categorize_data(file_input)))
+            self.dev_stats.count_data(
+                self.dev_stats.categorize_data(file_input))
+            )
         expected_result = {
             'low_salary':
             {
@@ -91,7 +93,7 @@ class TestTopFive(unittest.TestCase):
             {
                 'count': 826, 'min': 0, 'max': 50000, 'data':
                 {
-                    'SQL': 463, 'Computer science, computer'+
+                    'SQL': 463, 'Computer science, computer' +
                     ' engineering, or software engineering': 539,
                     'CSS': 558, 'HTML': 584, 'JavaScript': 600
                 }
@@ -99,14 +101,14 @@ class TestTopFive(unittest.TestCase):
             'medium_salary':
             {
                 'count': 507, 'min': 50001, 'max': 80000, 'data': {
-                    'SQL': 297, 'Computer science, computer engineering,'+
+                    'SQL': 297, 'Computer science, computer engineering,' +
                     ' or software engineering': 312,
                     'CSS': 331, 'HTML': 347, 'JavaScript': 364
                 }
             },
             'high_salary': {
                 'count': 667, 'min': 80001, 'max': 200000, 'data': {
-                    'United States': 406, 'Computer science, computer'+
+                    'United States': 406, 'Computer science, computer' +
                     ' engineering, or software engineering': 409,
                     'CSS': 413, 'HTML': 448, 'JavaScript': 504
                 }

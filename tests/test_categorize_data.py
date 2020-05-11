@@ -46,12 +46,14 @@ class TestCategorizeData(unittest.TestCase):
                 'min': 0, 'max': 50000, 'data': [
                     [
                         '95836', 'Argentina', 'Slightly satisfied',
-                        'A business discipline (ex. accounting, finance, marketing)',
+                        'A business discipline (ex. accounting, finance,' +
+                        ' marketing)',
                         '45600.0', '1 - 2 times per week', 'Male',
                         'Hispanic or Latino/Latina',
-                        'Secondary school (e.g. American high school,'+
+                        'Secondary school (e.g. American high school,' +
                         ' German Realschule or Gymnasium, etc.)',
-                        '1 - 2 hours', '35 - 44 years old', 'More than 4 years ago',
+                        '1 - 2 hours', '35 - 44 years old',
+                        'More than 4 years ago',
                         'C#;CoffeeScript;JavaScript;Ruby;HTML;CSS;Bash/Shell'
                     ]
                 ]
@@ -66,21 +68,25 @@ class TestCategorizeData(unittest.TestCase):
                 [
                     [
                         '51900', 'United Kingdom', 'Moderately satisfied',
-                        'Computer science, computer engineering, or software engineering',
+                        'Computer science, computer engineering, or software' +
+                        ' engineering',
                         '94455.0', '3 - 4 times per week', 'Male',
                         'White or of European descent',
                         'Master’s degree (MA, MS, M.Eng., MBA, etc.)',
-                        '3 - 4 hours', '35 - 44 years old', 'Between 1 and 2 years ago',
+                        '3 - 4 hours', '35 - 44 years old',
+                        'Between 1 and 2 years ago',
                         'C;C#;Java;JavaScript;Objective-C;PHP;Swift;HTML;CSS'
                     ],
                     [
                         '51710', 'Germany', 'Slightly dissatisfied',
-                        'A social science (ex. anthropology, psychology, political science)',
+                        'A social science (ex. anthropology, psychology,' +
+                        ' political science)',
                         '807756.0', '3 - 4 times per week', 'Male',
                         'White or of European descent',
-                        'Secondary school (e.g. American high school,'+
+                        'Secondary school (e.g. American high school,' +
                         ' German Realschule or Gymnasium, etc.)',
-                        '1 - 2 hours', '25 - 34 years old', 'Between 2 and 4 years ago',
+                        '1 - 2 hours', '25 - 34 years old',
+                        'Between 2 and 4 years ago',
                         'C#;JavaScript;Python;TypeScript;HTML;Bash/Shell'
                     ]
                 ]
@@ -101,19 +107,26 @@ class TestCategorizeData(unittest.TestCase):
                 'min': 0, 'max': 50000, 'data': [
                     [
                         '95836', 'Argentina', 'Slightly satisfied',
-                        'A business discipline (ex. accounting, finance, marketing)',
-                        '45600.0', '1 - 2 times per week', 'Male', 'Hispanic or Latino/Latina',
-                        'Secondary school (e.g. American high school,'+
+                        'A business discipline (ex. accounting, finance,' +
+                        ' marketing)',
+                        '45600.0', '1 - 2 times per week', 'Male',
+                        'Hispanic or Latino/Latina',
+                        'Secondary school (e.g. American high school,' +
                         ' German Realschule or Gymnasium, etc.)',
-                        '1 - 2 hours', '35 - 44 years old', 'More than 4 years ago',
+                        '1 - 2 hours', '35 - 44 years old',
+                        'More than 4 years ago',
                         'C#;CoffeeScript;JavaScript;Ruby;HTML;CSS;Bash/Shell'
                     ],
                     [
                         '36729', 'Brazil', 'Moderately dissatisfied',
-                        'Computer science, computer engineering, or software engineering',
-                        '16848.0', '3 - 4 times per week', 'Male', 'Hispanic or Latino/Latina',
-                        'Primary/elementary school', '1 - 2 hours', '25 - 34 years old',
-                        'Less than a year ago', 'JavaScript;PHP;Python;SQL;TypeScript;HTML;CSS'
+                        'Computer science, computer engineering, or software' +
+                        ' engineering',
+                        '16848.0', '3 - 4 times per week', 'Male',
+                        'Hispanic or Latino/Latina',
+                        'Primary/elementary school', '1 - 2 hours',
+                        '25 - 34 years old',
+                        'Less than a year ago',
+                        'JavaScript;PHP;Python;SQL;TypeScript;HTML;CSS'
                     ]
                 ]
             },
@@ -122,19 +135,23 @@ class TestCategorizeData(unittest.TestCase):
                 'min': 50001, 'max': 80000, 'data': [
                     [
                         '31721', 'Japan', 'Slightly dissatisfied',
-                        'Information systems, information technology, or system administration',
-                        '77433.0', '3 - 4 times per week', 'Male', 'East Asian',
-                        'They never completed any formal education', '30 - 59 minutes',
-                        '35 - 44 years old', 'Between 2 and 4 years ago', 'JavaScript;PHP'
+                        'Information systems, information technology, or' +
+                        ' system administration', '77433.0',
+                        '3 - 4 times per week', 'Male', 'East Asian',
+                        'They never completed any formal education',
+                        '30 - 59 minutes', '35 - 44 years old',
+                        'Between 2 and 4 years ago', 'JavaScript;PHP'
                     ],
                     [
                         '38620', 'Germany', 'Moderately dissatisfied',
-                        'Computer science, computer engineering, or software engineering',
-                        '73433.0', "I don't typically exercise", 'Female',
+                        'Computer science, computer engineering, or software' +
+                        ' engineering', '73433.0',
+                        "I don't typically exercise", 'Female',
                         'White or of European descent',
-                        'Secondary school (e.g. American high school,'+
+                        'Secondary school (e.g. American high school,' +
                         ' German Realschule or Gymnasium, etc.)',
-                        '1 - 2 hours', '35 - 44 years old', 'Less than a year ago',
+                        '1 - 2 hours', '35 - 44 years old',
+                        'Less than a year ago',
                         'Groovy;Java;JavaScript;SQL;HTML;CSS;Bash/Shell'
                     ]
                 ]
@@ -144,24 +161,31 @@ class TestCategorizeData(unittest.TestCase):
                 'min': 80001, 'max': 200000, 'data': [
                     [
                         '51900', 'United Kingdom', 'Moderately satisfied',
-                        'Computer science, computer engineering, or software engineering',
-                        '94455.0', '3 - 4 times per week', 'Male', 'White or of European descent',
-                        'Master’s degree (MA, MS, M.Eng., MBA, etc.)', '3 - 4 hours',
+                        'Computer science, computer engineering, or software' +
+                        ' engineering',
+                        '94455.0', '3 - 4 times per week', 'Male',
+                        'White or of European descent',
+                        'Master’s degree (MA, MS, M.Eng., MBA, etc.)',
+                        '3 - 4 hours',
                         '35 - 44 years old', 'Between 1 and 2 years ago',
                         'C;C#;Java;JavaScript;Objective-C;PHP;Swift;HTML;CSS'
                     ],
                     [
                         '51710', 'Germany', 'Slightly dissatisfied',
-                        'A social science (ex. anthropology, psychology, political science)',
-                        '807756.0', '3 - 4 times per week', 'Male', 'White or of European descent',
-                        'Secondary school (e.g. American high school,'+
+                        'A social science (ex. anthropology, psychology,' +
+                        ' political science)',
+                        '807756.0', '3 - 4 times per week', 'Male',
+                        'White or of European descent',
+                        'Secondary school (e.g. American high school,' +
                         ' German Realschule or Gymnasium, etc.)',
-                        '1 - 2 hours', '25 - 34 years old', 'Between 2 and 4 years ago',
+                        '1 - 2 hours', '25 - 34 years old',
+                        'Between 2 and 4 years ago',
                         'C#;JavaScript;Python;TypeScript;HTML;Bash/Shell'
                     ],
                     [
                         '44125', 'United States', 'Moderately dissatisfied',
-                        'A social science (ex. anthropology, psychology, political science)',
+                        'A social science (ex. anthropology, psychology,' +
+                        ' political science)',
                         '175000.0', '1 - 2 times per week', 'Male',
                         'White or of European descent',
                         'Bachelor’s degree (BA, BS, B.Eng., etc.)',
@@ -170,16 +194,19 @@ class TestCategorizeData(unittest.TestCase):
                     ],
                     [
                         '35167', 'United Kingdom', 'Extremely satisfied',
-                        'A humanities discipline (ex. literature, history, philosophy)',
+                        'A humanities discipline (ex. literature, history,' +
+                        ' philosophy)',
                         '90288.0', "I don't typically exercise", 'Male',
                         'White or of European descent',
                         'Master’s degree (MA, MS, M.Eng., MBA, etc.)',
                         '30 - 59 minutes', '25 - 34 years old',
-                        'Less than a year ago', 'C#;Go;JavaScript;Ruby;HTML;CSS'
+                        'Less than a year ago',
+                        'C#;Go;JavaScript;Ruby;HTML;CSS'
                     ],
                     [
                         '54695', 'Netherlands', 'Moderately satisfied',
-                        'Computer science, computer engineering, or software engineering',
+                        'Computer science, computer engineering, or software' +
+                        ' engineering',
                         '82000.0', '1 - 2 times per week', 'Male',
                         'White or of European descent',
                         'Master’s degree (MA, MS, M.Eng., MBA, etc.)',
@@ -190,6 +217,7 @@ class TestCategorizeData(unittest.TestCase):
             }
         }
         self.assertDictEqual(actual_result, expected_result)
+
 
 if __name__ == '__main__':
     unittest.main()
